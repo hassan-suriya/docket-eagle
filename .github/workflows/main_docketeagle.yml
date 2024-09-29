@@ -13,26 +13,26 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.x'
+          dotnet-version: '8.0'
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o ./Docket-Eagle
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: myapp
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: Docket-Eagle
+          path: ./Docket-Eagle
 
   deploy:
     runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      url: https://docketeagle-eeb4hwgkhwfsakej.westus-01.azurewebsites.net/
     permissions:
       id-token: write #This is required for requesting the JWT
 
@@ -40,20 +40,19 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
+          name: Docket-Eagle
       
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_32728D11EE064D699A2A2AA6B310B2E7 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E2740901BA2048A1838F765A33117933 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3C1154000C034E2DB5F6D2E3F0E375B9 }}
+          client-id: 1871568f-cd7e-4cb2-8b7a-0738ed5500ef
+          tenant-id: a1e3cc4f-47e2-4e32-a7a1-5b14136b160b
+          subscription-id: 3733e019-124f-4bd1-a319-a004a2280b0c
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'DocketEagle'
+          app-name: 'Docket-Eagle'
           slot-name: 'Production'
           package: .
-          
