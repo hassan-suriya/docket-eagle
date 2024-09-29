@@ -1,0 +1,119 @@
+﻿body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #0d6efd;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+    .navbar .navbar-brand {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+        .navbar .navbar-brand img {
+            width: 40px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+    .navbar .navbar-nav .nav-link {
+        color: white;
+        font-size: 1rem;
+    }
+
+    .navbar .navbar-nav .btn {
+        color: white;
+        border-color: white;
+    }
+
+/* Main content styling */
+.main-content {
+    padding: 20px;
+    padding-top: 80px;
+    max-width: 100%;
+}
+
+.customer-portal-header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #0d6efd;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.subscription-type-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #495057;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.search-bar {
+    width: 300px;
+    margin-left: auto;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .table th,
+    .table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+    }
+
+.btn-action {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+    margin-right: 5px;
+}
+
+.subscription-info {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+    .subscription-info h4 {
+        font-size: 1.75rem;
+        color: #343a40;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .subscription-info p {
+        font-size: 1.25rem;
+        color: #6c757d;
+    }
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .navbar {
+        text-align: center;
+    }
+
+    .customer-portal-header {
+        text-align: center;
+    }
+
+    .search-bar {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
