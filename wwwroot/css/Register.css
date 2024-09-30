@@ -104,10 +104,30 @@ body {
     margin-bottom: 0.75rem;
 }
 
+/* Ensure consistent alignment and font size for the pricing buttons */
 #pricingTiers .btn {
     padding: 0.5rem;
     font-size: 0.9rem;
     margin: 0.15rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 85px; /* Adjust height for consistency */
+}
+
+.pricing-button .dockets {
+    font-size: 0.95rem; /* Adjust size to fit single line */
+    font-weight: bold;
+}
+
+.pricing-button .price {
+    font-size: 0.85rem; /* Smaller font for price */
+}
+
+/* Adjust specific styles for unlimited dockets button */
+.pricing-button[data-tier="unlimited"] .dockets {
+    margin-top: 3px; /* Adjust margin to balance spacing */
 }
 
 footer {
@@ -127,6 +147,7 @@ footer {
         footer a:hover {
             color: var(--primary-dark);
         }
+
 /* Flexbox layout for buttons */
 .pricing-button {
     display: flex;
@@ -138,17 +159,7 @@ footer {
     height: 80px; /* Ensure consistent button height */
 }
 
-    .pricing-button .dockets {
-        font-weight: bold;
-        font-size: 1rem; /* Adjust size of "Up to X dockets" */
-    }
-
-    .pricing-button .price {
-        font-size: 0.8rem; /* Adjust size of price */
-    }
-
-
-
+/* Media query adjustments for smaller screens */
 @media (max-width: 768px) {
     .navbar-nav {
         margin-top: 1rem;
