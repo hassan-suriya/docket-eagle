@@ -34,7 +34,7 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12">
-                        <h1 class="animate__animated animate__fadeInDown">Protect Your Intellectual Property</h1>
+                        <h1 class="animate__animated animate__fadeInDown">Let Not Your Intellectual Property Asset Abandoned or Court Enter Default Against You</h1>
                         <p class="animate__animated animate__fadeInUp">Let DocketEagle Monitor Your Assets 24/7/365</p>
 
                         <div class="row mt-5">
@@ -77,7 +77,9 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="testimonial-card text-center">
-                            <img src="~/pfp.jpg" alt="Client Avatar" class="mx-auto d-block rounded-circle" width="150" height="150" loading="lazy">
+                            <div class="image-container">
+                                <img src="~/pfp.png" alt="Client Avatar" class="client-image" loading="lazy">
+                            </div>
                             <h4 class="mt-3">Keith Elam</h4>
                             <p>"DocketEagle has set an Eagle eye on my trademark and patent filings in the US, Canada, Australia, New Zealand, and EU. In the past I got my filings abandoned, but thanks to DocketEagle, never again!"</p>
                             <p><strong>Oregon, United States</strong></p>
@@ -181,12 +183,45 @@
                 });
             });
 
-            // Animate on scroll
+            // Fix for navbar in mobile view
+            const navbarToggler = document.querySelector('.navbar-toggler');
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+
+            // Function to toggle the navbar
+            function toggleNavbar() {
+                navbarCollapse.classList.toggle('show');
+            }
+
+            // Toggle navbar when clicking on hamburger menu
+            navbarToggler.addEventListener('click', function (event) {
+                event.stopPropagation();
+                toggleNavbar();
+            });
+
+            // Close navbar when clicking on a nav item
+            const navItems = document.querySelectorAll('.navbar-nav .nav-link');
+            navItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    if (navbarCollapse.classList.contains('show')) {
+                        toggleNavbar();
+                    }
+                });
+            });
+
+            // Close navbar when clicking outside
+            document.addEventListener('click', function (event) {
+                const isClickInside = navbarCollapse.contains(event.target) || navbarToggler.contains(event.target);
+                if (!isClickInside && navbarCollapse.classList.contains('show')) {
+                    toggleNavbar();
+                }
+            });
+
+            // Animate on scroll (with optimization to prevent multiple animations)
             const animateOnScroll = () => {
                 const elements = document.querySelectorAll('.animate__animated:not(.animate__fadeInUp)');
                 elements.forEach(element => {
-                    if (isElementInViewport(element)) {
-                        element.classList.add('animate__fadeInUp');
+                    if (isElementInViewport(element) && !element.classList.contains('animated')) {
+                        element.classList.add('animate__fadeInUp', 'animated');
                     }
                 });
             };
@@ -201,7 +236,22 @@
                 );
             };
 
-            window.addEventListener('scroll', animateOnScroll);
+            // Throttle function to limit the rate at which animateOnScroll can fire
+            const throttle = (func, limit) => {
+                let inThrottle;
+                return function () {
+                    const args = arguments;
+                    const context = this;
+                    if (!inThrottle) {
+                        func.apply(context, args);
+                        inThrottle = true;
+                        setTimeout(() => inThrottle = false, limit);
+                    }
+                }
+            }
+
+            // Apply throttling to scroll event
+            window.addEventListener('scroll', throttle(animateOnScroll, 100));
             window.addEventListener('load', animateOnScroll);
         });
     </script>

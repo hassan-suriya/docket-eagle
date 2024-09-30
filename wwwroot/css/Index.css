@@ -2,7 +2,7 @@
     --primary-color: #0052ff;
     --secondary-color: #f0f8ff;
     --text-color: #333333;
-    --light-text-color: #000000;
+    --light-text-color: #666666;
 }
 
 body {
@@ -11,10 +11,10 @@ body {
     background-color: #ffffff;
 }
 
+/* Navbar styles */
 .navbar {
     background-color: #ffffff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: all 0.3s ease-in-out;
 }
 
 .navbar-brand {
@@ -35,7 +35,7 @@ body {
 .btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
-    transition: all 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
 }
 
     .btn-primary:hover {
@@ -43,13 +43,14 @@ body {
         border-color: #003bbd;
     }
 
+/* Hero section */
 .hero {
     background-color: var(--secondary-color);
     padding: 100px 0;
 }
 
     .hero h1 {
-        font-size: 3rem;
+        font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
     }
@@ -60,6 +61,7 @@ body {
         margin-bottom: 2rem;
     }
 
+/* Stats */
 .stat-item {
     text-align: center;
     margin-bottom: 2rem;
@@ -67,7 +69,7 @@ body {
 
     .stat-item h2 {
         font-size: 2.5rem;
-        font-weight: 1000;
+        font-weight: 700;
         color: var(--primary-color);
     }
 
@@ -76,6 +78,7 @@ body {
         color: var(--light-text-color);
     }
 
+/* CTA section */
 .cta-section {
     background-color: var(--primary-color);
     color: #ffffff;
@@ -92,6 +95,7 @@ body {
         font-weight: 600;
     }
 
+/* Footer */
 footer {
     background-color: var(--secondary-color);
     padding: 60px 0 30px;
@@ -123,17 +127,7 @@ footer {
             color: var(--primary-color);
         }
 
-.social-icons a {
-    color: var(--light-text-color);
-    margin-right: 1rem;
-    font-size: 1.2rem;
-    transition: color 0.3s ease-in-out;
-}
-
-    .social-icons a:hover {
-        color: var(--primary-color);
-    }
-
+/* Back to top button */
 .back-to-top {
     position: fixed;
     bottom: 20px;
@@ -142,31 +136,6 @@ footer {
     z-index: 1000;
 }
 
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
-
-    .stat-item h2 {
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .navbar-nav .nav-item {
-        margin-bottom: 10px;
-    }
-
-        .navbar-nav .nav-item a {
-            width: 100%;
-        }
-}
-
-/* New styles for the testimonial section */
 .testimonial-section {
     background-color: var(--secondary-color);
     padding: 80px 0;
@@ -180,20 +149,71 @@ footer {
     margin-bottom: 30px;
 }
 
-    .testimonial-card img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 20px;
+.image-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+}
+
+.client-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.testimonial-card h4 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.testimonial-card p {
+    font-style: italic;
+    color: var(--light-text-color);
+}
+/* Responsive styles */
+@media (max-width: 768px) {
+    .image-container {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
     }
 
-    .testimonial-card h4 {
-        color: var(--primary-color);
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .stat-item h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-nav {
+        padding-right: 15px;
+    }
+
+    .navbar-toggler {
+        margin-right: 15px;
+    }
+
+    .navbar-nav .nav-item {
         margin-bottom: 10px;
     }
 
-    .testimonial-card p {
-        font-style: italic;
-        color: var(--light-text-color);
-    }
+        .navbar-nav .nav-item a {
+            width: 100%;
+        }
+}
