@@ -125,7 +125,7 @@
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <h3 class="section-heading text-center">Case Numbers & Details</h3>
+                            <h3 class="section-heading text-center">Case Numbers & Court Details</h3>
                             <div id="caseFields">
                                 <!-- Case fields will be dynamically added here -->
                             </div>
@@ -255,17 +255,17 @@
             caseNumberInput.required = true;
             caseNumberCol.appendChild(caseNumberInput);
 
-            const caseDetailsCol = document.createElement('div');
-            caseDetailsCol.className = 'col-md-6';
-            const caseDetailsInput = document.createElement('input');
-            caseDetailsInput.type = 'text';
-            caseDetailsInput.className = 'form-control';
-            caseDetailsInput.placeholder = `Case details ${caseFields.children.length + 1}`;
-            caseDetailsInput.required = true;
-            caseDetailsCol.appendChild(caseDetailsInput);
+            const courtDetailsCol = document.createElement('div');
+            courtDetailsCol.className = 'col-md-6';
+            const courtDetailsInput = document.createElement('input');
+            courtDetailsInput.type = 'text';
+            courtDetailsInput.className = 'form-control';
+            courtDetailsInput.placeholder = `Court details ${caseFields.children.length + 1}`;
+            courtDetailsInput.required = true;
+            courtDetailsCol.appendChild(courtDetailsInput);
 
             row.appendChild(caseNumberCol);
-            row.appendChild(caseDetailsCol);
+            row.appendChild(courtDetailsCol);
             caseFields.appendChild(row);
         }
 
