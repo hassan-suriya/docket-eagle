@@ -146,15 +146,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Back to top button
         const backToTopButton = document.querySelector('.back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                backToTopButton.style.display = 'block';
-            } else {
-                backToTopButton.style.display = 'none';
+        const navbar = document.querySelector('.navbar');
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+
+        // Throttle function
+        const throttle = (func, limit) => {
+            let inThrottle;
+            return function () {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
             }
-        });
+        }
+
+        // Back to top button
+        window.addEventListener('scroll', throttle(() => {
+            backToTopButton.style.display = window.scrollY > 20 ? 'block' : 'none';
+        }, 100));
 
         backToTopButton.addEventListener('click', (e) => {
             e.preventDefault();
@@ -162,8 +176,7 @@
         });
 
         // Navbar background change on scroll
-        const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', () => {
+        window.addEventListener('scroll', throttle(() => {
             if (window.scrollY > 50) {
                 navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
                 navbar.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
@@ -171,7 +184,7 @@
                 navbar.style.backgroundColor = '#ffffff';
                 navbar.style.boxShadow = 'none';
             }
-        });
+        }, 100));
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -182,10 +195,6 @@
                 });
             });
         });
-
-        // Fix for navbar in mobile view
-        const navbarToggler = document.querySelector('.navbar-toggler');
-        const navbarCollapse = document.querySelector('.navbar-collapse');
 
         // Function to toggle the navbar
         function toggleNavbar() {
@@ -199,8 +208,7 @@
         });
 
         // Close navbar when clicking on a nav item
-        const navItems = document.querySelectorAll('.navbar-nav .nav-link');
-        navItems.forEach(item => {
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(item => {
             item.addEventListener('click', function () {
                 if (navbarCollapse.classList.contains('show')) {
                     toggleNavbar();
@@ -216,16 +224,7 @@
             }
         });
 
-        // Animate on scroll (with optimization to prevent multiple animations)
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.animate__animated:not(.animate__fadeInUp)');
-            elements.forEach(element => {
-                if (isElementInViewport(element) && !element.classList.contains('animated')) {
-                    element.classList.add('animate__fadeInUp', 'animated');
-                }
-            });
-        };
-
+        // Animate on scroll
         const isElementInViewport = (el) => {
             const rect = el.getBoundingClientRect();
             return (
@@ -236,21 +235,15 @@
             );
         };
 
-        // Throttle function to limit the rate at which animateOnScroll can fire
-        const throttle = (func, limit) => {
-            let inThrottle;
-            return function () {
-                const args = arguments;
-                const context = this;
-                if (!inThrottle) {
-                    func.apply(context, args);
-                    inThrottle = true;
-                    setTimeout(() => inThrottle = false, limit);
+        const animateOnScroll = () => {
+            document.querySelectorAll('.animate__animated:not(.animate__fadeInUp)').forEach(element => {
+                if (isElementInViewport(element) && !element.classList.contains('animated')) {
+                    element.classList.add('animate__fadeInUp', 'animated');
                 }
-            }
-        }
+            });
+        };
 
-        // Apply throttling to scroll event
+        // Apply throttling to scroll event and load event
         window.addEventListener('scroll', throttle(animateOnScroll, 100));
         window.addEventListener('load', animateOnScroll);
     });

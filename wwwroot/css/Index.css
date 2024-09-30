@@ -15,6 +15,7 @@ body {
 .navbar {
     background-color: #ffffff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: none;
 }
 
 .navbar-brand {
@@ -25,7 +26,7 @@ body {
 .nav-link {
     color: var(--text-color);
     font-weight: 600;
-    transition: color 0.3s ease-in-out;
+    transition: none;
 }
 
     .nav-link:hover {
@@ -35,7 +36,7 @@ body {
 .btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
-    transition: background-color 0.3s ease-in-out;
+    transition: none;
 }
 
     .btn-primary:hover {
@@ -53,6 +54,7 @@ body {
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
+        margin-top:30px;
     }
 
     .hero p {
@@ -120,7 +122,7 @@ footer {
     footer a {
         color: var(--light-text-color);
         text-decoration: none;
-        transition: color 0.3s ease-in-out;
+        transition: none;
     }
 
         footer a:hover {
@@ -177,43 +179,80 @@ footer {
     font-style: italic;
     color: var(--light-text-color);
 }
-/* Responsive styles */
-@media (max-width: 768px) {
-    .image-container {
-        width: 120px;
-        height: 120px;
-    }
-}
 
 /* Responsive styles */
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2rem;
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background-color: #ffffff;
+        padding: 15px;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .hero p {
-        font-size: 1rem;
+    .navbar-nav {
+        align-items: center;
     }
+
+        .navbar-nav .nav-item {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+            .navbar-nav .nav-item .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+    .hero {
+        padding: 80px 0;
+    }
+
+        .hero h1 {
+            font-size: 2rem;
+        }
+
+        .hero p {
+            font-size: 1rem;
+        }
 
     .stat-item h2 {
         font-size: 2rem;
     }
 }
 
-@media (max-width: 576px) {
-    .navbar-nav {
-        padding-right: 15px;
+@media (max-width: 767px) {
+    .navbar-brand img {
+        width: 40px;
     }
 
+    .hero {
+        padding: 60px 0;
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+    }
+
+    .image-container {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 575px) {
     .navbar-toggler {
-        margin-right: 15px;
+        margin-right: 0;
     }
 
-    .navbar-nav .nav-item {
-        margin-bottom: 10px;
+    .hero h1 {
+        font-size: 1.75rem;
     }
 
-        .navbar-nav .nav-item a {
-            width: 100%;
-        }
+    .stat-item {
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-section h2 {
+        font-size: 1.75rem;
+    }
 }
