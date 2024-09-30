@@ -2,196 +2,218 @@
     ViewData["Title"] = "Home Page";
 }
 
-<link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
-
-<nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-        <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-            <img src="~/DocketEagle-logo.svg.png" alt="DocketEagle Logo" style="width: 50px; height: auto;">
-            DocketEagle
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white ms-2" asp-controller="Auth" asp-action="Signin">Sign In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white ms-2" asp-controller="Auth" asp-action="Register">Register</a>
-                </li>
-            </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - DocketEagle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <img src="~/DocketEagle-logo.svg.png" alt="DocketEagle Logo" width="50" height="auto">
+                DocketEagle
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-2" asp-controller="Auth" asp-action="Signin">Sign In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-2" asp-controller="Auth" asp-action="Register">Register</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<section class="hero">
-    <div class="container">
-        <div class="row align-items-center">
-                <div class="col-lg-6 col-md-12">
-                    <h1 class="animate__animated animate__fadeInDown">Let Not Your Intellectual Property Asset Abandoned or Court Enter Default Against You</h1>
-                    <p class="animate__animated animate__fadeInUp">Let DocketEagle Keep an Eye on 24/7/365</p>
-                    
-                    <div class="row mt-5">
-                        <div class="col-md-3 col-6">
-                            <div class="stat-item">
-                                <h2 class="animate__animated animate__zoomIn">5+</h2>
-                                <p>Dockets Monitored</p>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-12">
+                        <h1 class="animate__animated animate__fadeInDown">Protect Your Intellectual Property</h1>
+                        <p class="animate__animated animate__fadeInUp">Let DocketEagle Monitor Your Assets 24/7/365</p>
+
+                        <div class="row mt-5">
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="stat-item">
+                                    <h2 class="animate__animated animate__zoomIn">5+</h2>
+                                    <p>Dockets Monitored</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="stat-item">
+                                    <h2 class="animate__animated animate__zoomIn">1+</h2>
+                                    <p>Satisfied Clients</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="stat-item">
+                                    <h2 class="animate__animated animate__zoomIn">3+</h2>
+                                    <p>Updates Delivered</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="stat-item">
+                                    <h2 class="animate__animated animate__zoomIn">1+</h2>
+                                    <p>Monitoring Experts</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-6">
-                            <div class="stat-item">
-                                <h2 class="animate__animated animate__zoomIn">1+</h2>
-                                <p>Satisfied Clients</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-6">
-                            <div class="stat-item">
-                                <h2 class="animate__animated animate__zoomIn">3+</h2>
-                                <p>Updates Delivered</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-6">
-                            <div class="stat-item">
-                                <h2 class="animate__animated animate__zoomIn">1+</h2>
-                                <p>Monitoring Experts</p>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 text-center mt-4 mt-lg-0">
+                        <img src="~/new-bg.png" alt="Trademark registration illustration" class="img-fluid animate__animated animate__fadeInRight" loading="lazy">
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-12 text-center">
-                <img src="~/new-bg.png" alt="Trademark registration illustration" class="img-fluid animate__animated animate__fadeInRight" style="max-width: 100%; height: auto;">
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<!-- New testimonial section -->
-<section class="testimonial-section">
-    <div class="container">
-        <h2 class="text-center mb-5">Client Testimonial</h2>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="testimonial-card text-center">
-                    <img src="https://via.placeholder.com/150" alt="Client Avatar" class="mx-auto d-block">
-                    <h4>
-                        Keith Elam
-                    </h4>
+        <section class="testimonial-section">
+            <div class="container">
+                <h2 class="text-center mb-5">Client Testimonial</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="testimonial-card text-center">
+                            <img src="~/pfp.jpg" alt="Client Avatar" class="mx-auto d-block rounded-circle" width="150" height="150" loading="lazy">
+                            <h4 class="mt-3">Keith Elam</h4>
+                            <p>"DocketEagle has set an Eagle eye on my trademark and patent filings in the US, Canada, Australia, New Zealand, and EU. In the past I got my filings abandoned, but thanks to DocketEagle, never again!"</p>
+                            <p><strong>Oregon, United States</strong></p>
+                            <p><strong>Pioneer</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section text-center">
+            <div class="container">
+                <h2 class="animate__animated animate__fadeInUp">Ready to Set Your Eagle Eye?</h2>
+                <p class="animate__animated animate__fadeInUp">Join many satisfied clients who trust DocketEagle for their monitoring needs</p>
+                <a asp-controller="Auth" asp-action="Register" class="btn btn-light btn-lg animate__animated animate__fadeInUp">Register Now</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-4 mb-4">
+                    <h5>DocketEagle</h5>
+                    <p><strong>Protect Your Intellectual Property Assets</strong><br> Let DocketEagle Keep an Eye on 24/7/365</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-controller="Auth" asp-action="Register">Register</a></li>
+                        <li><a asp-controller="Auth" asp-action="Signin">Sign In</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Legal</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Contact Us</h5>
                     <p>
-                        "DocketEagle has set an Eagle eye on my trademark and patent filings in the US, Canada, Australia, New Zealand, and EU. In the past I got my filings abondoned, but thanks to DocketEagle, never again!"</p>
-                    <p><strong>Oregon, United States</strong></p>
-                    <p><strong>Pioneer</strong></p>
+                        <strong>Phone:</strong> +923334291763 (WhatsApp)<br>
+                        <strong>Email:</strong> <a href="mailto:docketeagle@gmail.com">docketeagle@gmail.com</a>
+                    </p>
+                    <p><strong>Office Address:</strong> 9th Floor, Tricon Corporate Center, Gulberg-II, Lahore, Pakistan 54000</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-
-<section class="cta-section text-center">
-    <div class="container">
-        <h2 class="animate__animated animate__fadeInUp">Ready to Set your Eagle Eye?</h2>
-        <p class="animate__animated animate__fadeInUp">Join many satisfied clients who trust DocketEagle for their monitoring needs</p>
-        <a asp-controller="Auth" asp-action="Register" class="btn btn-light btn-lg animate__animated animate__fadeInUp">Register Now</a>
-    </div>
-</section>
-
-<footer>
-    <div class="container">
-        <div class="row justify-content-between">
-            <div class="col-md-4 mb-4">
-                <h5>DocketEagle</h5>
-                <p><strong>Let Not Your Intellectual Property Asset Abandoned or Court Enter Default Against You </strong><br> Let DocketEagle Keep an Eye on 24/7/365</p>
-            </div>
-            <div class="col-md-2 mb-4">
-                <h5>Quick Links</h5>
-                <ul>
-                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-controller="Auth" asp-action="Register">Register</a></li>
-                    <li><a asp-controller="Auth" asp-action="Signin">Sign In</a></li>
-                </ul>
-            </div>
-            <div class="col-md-2 mb-4">
-                <h5>Legal</h5>
-                <ul>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3 mb-4">
-                <h5>Contact Us</h5>
-                <p><strong>Phone:</strong> +923334291763 (Whatsapp)<br>
-                <strong>Email:</strong> docketeagle@gmail.com</p>
-                <p><strong>Office Address:</strong> 9th Floor, Tricon Corporate Center, Gulberg-II, Lahore, Pakistan 54000</p>
+        <div class="container mt-4">
+            <div class="text-center">
+                <p>&copy; 2024 DocketEagle. All Rights Reserved</p>
+                <p>Developed and designed by <a href="https://www.byteforth.com" target="_blank" rel="noopener noreferrer">ByteForth</a></p>
             </div>
         </div>
-    </div>
-    <div class="container mt-4">
-        <div class="text-center">
-            <p>&copy; 2024 DocketEagle. All Rights Reserved</p>
-            <p>Developed and designed by <a href="https://www.byteforth.com" target="_blank">ByteForth</a></p>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-<a asp-controller="Home" asp-action="Index" class="btn btn-primary back-to-top" role="button"><i class="fas fa-arrow-up"></i></a>
+    <a href="#" class="btn btn-primary back-to-top" role="button" aria-label="Back to top">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </a>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    window.onscroll = function() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.querySelector('.back-to-top').style.display = "block";
-        } else {
-            document.querySelector('.back-to-top').style.display = "none";
-        }
-    };
-
-    // Navbar background change on scroll
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            document.querySelector('.navbar').style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-            document.querySelector('.navbar').style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-        } else {
-            document.querySelector('.navbar').style.backgroundColor = '#ffffff';
-            document.querySelector('.navbar').style.boxShadow = 'none';
-        }
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Back to top button
+            const backToTopButton = document.querySelector('.back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    backToTopButton.style.display = 'block';
+                } else {
+                    backToTopButton.style.display = 'none';
+                }
             });
+
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Navbar background change on scroll
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                } else {
+                    navbar.style.backgroundColor = '#ffffff';
+                    navbar.style.boxShadow = 'none';
+                }
+            });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Animate on scroll
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.animate__animated:not(.animate__fadeInUp)');
+                elements.forEach(element => {
+                    if (isElementInViewport(element)) {
+                        element.classList.add('animate__fadeInUp');
+                    }
+                });
+            };
+
+            const isElementInViewport = (el) => {
+                const rect = el.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            };
+
+            window.addEventListener('scroll', animateOnScroll);
+            window.addEventListener('load', animateOnScroll);
         });
-    });
-
-    // Add animation on scroll
-    function animateOnScroll() {
-        const elements = document.querySelectorAll('.animate__animated');
-        elements.forEach(element => {
-            if (isElementInViewport(element)) {
-                element.style.visibility = 'visible';
-                element.classList.add('animate__fadeInUp');
-            }
-        });
-    }
-
-    function isElementInViewport(el) {
-        const rect = el.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
-
-    window.addEventListener('scroll', animateOnScroll);
-    window.addEventListener('load', animateOnScroll);
-</script>
+    </script>
+</body>
+</html>

@@ -2,264 +2,291 @@
     ViewData["Title"] = "Register";
 }
 
-
 <link rel="stylesheet" href="~/css/Register.css" asp-append-version="true" />
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
         <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                <img src="~/DocketEagle-logo.svg.png" alt="DocketEagle Logo" style="width: 50px; height: auto;">
-                DocketEagle
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
+            <img src="~/DocketEagle-logo.svg.png" alt="DocketEagle Logo" style="width: 50px; height: auto;">
+            DocketEagle
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link btn btn-primary text-white" asp-controller="Auth" asp-action="Signin">Sign In</a>
-                    </li>
-                </ul>
-            </div>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-
-    <section class="form-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-10 col-lg-8">
-                    <div class="form-container">
-                        <h2 class="text-center">Register for DocketEagle</h2>
-                        <form id="registrationForm">
-                            <div class="row mb-3">
-                                <div class="col-md-6 mb-3 mb-md-0">
-                                    <input type="text" class="form-control" placeholder="First Name" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Last Name" required>
-                                </div>
+<section class="form-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="form-container">
+                    <h2 class="text-center">Register for DocketEagle</h2>
+                    <form id="registrationForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <input type="text" class="form-control" placeholder="First Name" required>
                             </div>
-                            <div class="mb-3">
-                                <input type="email" class="form-control" placeholder="Email address" required>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Last Name" required>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6 mb-3 mb-md-0">
-                                    <select id="socialMediaSelector" class="form-select" required>
-                                        <option value="" selected disabled>Select Social Media for Updates</option>
-                                        <option value="facebook">Facebook</option>
-                                        <option value="twitter">Twitter</option>
-                                        <option value="instagram">Instagram</option>
-                                        <option value="linkedin">LinkedIn</option>
-                                        <option value="Email">Email</option>
-                                        <option value="Mobile">Mobile</option>
-                                        <option value="SMS">SMS</option>
-                                        <option value="Messenger">Messenger</option>
-                                        <option value="Telegram">Telegram</option>
-                                        
-
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" id="socialMediaHandle" class="form-control" placeholder="Social Media Handle" required>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 text-center">
-                                <h3 class="section-heading">Billing Cycle</h3>
-                                <div class="btn-group d-flex flex-wrap" role="group" aria-label="Billing Cycle">
-                                    <input type="radio" class="btn-check" name="billingCycle" id="monthly" autocomplete="off" checked>
-                                    <label class="btn btn-outline-primary flex-grow-1" for="monthly">Monthly</label>
-                                    <input type="radio" class="btn-check" name="billingCycle" id="annual" autocomplete="off">
-                                    <label class="btn btn-outline-primary flex-grow-1" for="annual">Annual</label>
-                                </div>
-                                
-                            </div>
-
-                            <div class="mb-3">
-                                <h3 class="section-heading text-center">Select Your Plan</h3>
-                            <p class="mt-2 mb-3 text-center">Introductory offer for first 100 (Pioneer) Subscribers </p>
-                                <!-- Pricing Section -->
-                                <div class="row" id="pricingTiers">
-                                    <div class="col-6 col-md-3 mb-2">
-                                        <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="upto2">
-                                            <span class="dockets">Up to 2 dockets</span>
-                                            <span class="price">$9.99</span>
-                                        </button>
-                                    </div>
-                                    <div class="col-6 col-md-3 mb-2">
-                                        <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="upto4">
-                                            <span class="dockets">Up to 4 dockets</span>
-                                            <span class="price">$19.98</span>
-                                        </button>
-                                    </div>
-                                    <div class="col-6 col-md-3 mb-2">
-                                        <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="upto6">
-                                            <span class="dockets">Up to 6 dockets</span>
-                                            <span class="price">$29.97</span>
-                                        </button>
-                                    </div>
-                                    <div class="col-6 col-md-3 mb-2">
-                                        <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="unlimited">
-                                            <span class="dockets">Unlimited dockets*</span>
-                                            <span class="price">$49.99</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                                
-                            <!-- Red Terms and Conditions Text -->
-                            <div id="termsAndConditions" class="text-danger text-center mt-3" style="display: none;">
-                                <p>*Terms and conditions apply</p>
-                            </div>
-
-                            <div class="mb-3 mt-3 ">
-                                <h3 class="section-heading text-center ">Trademark/Patent/Case Number & Court Details</h3>
-                                <div id="caseNumberFields">
-                                    <input type="text" class="form-control mb-2" placeholder="Case number 1" required>
-                                    <input type="text" class="form-control mb-2" placeholder="Case number 2" required>
-                                  
-                                </div>
-                                <div id="addFieldButton" class="text-center mt-2" style="display: none;">
-                                    <button type="button" class="btn btn-outline-primary btn-sm" id="addCaseField">+ Add Case Number</button>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 text-center">
-                                <h4>Total: $<span id="totalPrice">9.99</span></h4>
-                                <p class="mt-2 mb-0">Auto-renewal does not apply.</p>
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="termsCheck" required>
-                                <label class="form-check-label" for="termsCheck">
-                                    I agree to the <a href="terms-and-conditions.html" target="_blank">Terms and Conditions</a>
-                                </label>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Register/Checkout</button>
-                        </form>
-                        <div class="text-center mt-3">
-                        <p>Already have an account? <a asp-controller="Auth" asp-action="Signin" class="text-primary">Sign In</a></p>
                         </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Email address" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <select id="socialMediaSelector" class="form-select" required>
+                                    <option value="" selected disabled>Select Social Media for Updates</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="twitter">Twitter</option>
+                                    <option value="instagram">Instagram</option>
+                                    <option value="linkedin">LinkedIn</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Mobile">Mobile</option>
+                                    <option value="SMS">SMS</option>
+                                    <option value="Messenger">Messenger</option>
+                                    <option value="Telegram">Telegram</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="socialMediaHandle" class="form-control" placeholder="Social Media Handle" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 text-center">
+                            <h3 class="section-heading">Billing Cycle</h3>
+                            <div class="btn-group d-flex flex-wrap" role="group" aria-label="Billing Cycle">
+                                <input type="radio" class="btn-check" name="billingCycle" id="monthly" autocomplete="off" checked>
+                                <label class="btn btn-outline-primary flex-grow-1" for="monthly">Monthly</label>
+                                <input type="radio" class="btn-check" name="billingCycle" id="annual" autocomplete="off">
+                                <label class="btn btn-outline-primary flex-grow-1" for="annual">Annual</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <h3 class="section-heading text-center">Select Your Plan</h3>
+                            <p class="mt-2 mb-3 text-center">Introductory offer for first 100 (Pioneer) Subscribers </p>
+                            <div class="row" id="pricingTiers">
+                                <div class="col-6 col-md-3 mb-2">
+                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="upto2">
+                                        <span class="dockets">Up to 2 dockets</span>
+                                        <span class="price">$9.99</span>
+                                        <span class="annual-price" style="display: none;">
+                                            <span class="original-price"><s>$119.99</s></span>
+                                           
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="col-6 col-md-3 mb-2">
+                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="upto4">
+                                        <span class="dockets">Up to 4 dockets</span>
+                                        <span class="price">$19.98</span>
+                                        <span class="annual-price" style="display: none;">
+                                            <span class="original-price"><s>$239.98</s></span>
+                                           
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="col-6 col-md-3 mb-2">
+                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="upto6">
+                                        <span class="dockets">Up to 6 dockets</span>
+                                        <span class="price">$29.97</span>
+                                        <span class="annual-price" style="display: none;">
+                                            <span class="original-price"><s>$359.97</s></span>
+                                           
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="col-6 col-md-3 mb-2">
+                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="unlimited">
+                                        <span class="dockets">Unlimited dockets*</span>
+                                        <span class="price">$49.99</span>
+                                        <span class="annual-price" style="display: none;">
+                                            <span class="original-price"><s>$599.99</s></span>
+                                           
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="termsAndConditions" class="text-danger text-center mt-3" style="display: none;">
+                            <p>*Terms and conditions apply</p>
+                        </div>
+
+                        <div class="mb-3 mt-3">
+                            <h3 class="section-heading text-center">Case Numbers & Details</h3>
+                            <div id="caseFields">
+                                <!-- Case fields will be dynamically added here -->
+                            </div>
+                            <div id="addFieldButton" class="text-center mt-2" style="display: none;">
+                                <button type="button" class="btn btn-outline-primary btn-sm" id="addCaseField">+ Add Case</button>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 text-center">
+                            <h4>Total: $<span id="totalPrice">9.99</span></h4>
+                            <p class="mt-2 mb-0">Auto-renewal does not apply.</p>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                            <label class="form-check-label" for="termsCheck">
+                                I agree to the <a href="terms-and-conditions.html" target="_blank">Terms and Conditions</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Register/Checkout</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Already have an account? <a asp-controller="Auth" asp-action="Signin" class="text-primary">Sign In</a></p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <footer class="mt-4">
-        <div class="container">
-            <div class="text-center">
-                <p>&copy; 2024 DocketEagle. All Rights Reserved</p>
-                <p>Developed and designed by <a href="https://www.byteforth.com" target="_blank">ByteForth</a></p>
-            </div>
+<footer class="mt-4">
+    <div class="container">
+        <div class="text-center">
+            <p>&copy; 2024 DocketEagle. All Rights Reserved</p>
+            <p>Developed and designed by <a href="https://www.byteforth.com" target="_blank">ByteForth</a></p>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const socialMediaSelector = document.getElementById('socialMediaSelector');
-    const socialMediaHandle = document.getElementById('socialMediaHandle');
-    const billingCycleRadios = document.querySelectorAll('input[name="billingCycle"]');
-    const pricingTiers = document.getElementById('pricingTiers');
-    const totalPrice = document.getElementById('totalPrice');
-    const termsAndConditions = document.getElementById('termsAndConditions');
-    const caseNumberFields = document.getElementById('caseNumberFields');
-    const addFieldButton = document.getElementById('addFieldButton');
-    const addCaseFieldButton = document.getElementById('addCaseField');
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const socialMediaSelector = document.getElementById('socialMediaSelector');
+        const socialMediaHandle = document.getElementById('socialMediaHandle');
+        const billingCycleRadios = document.querySelectorAll('input[name="billingCycle"]');
+        const pricingTiers = document.getElementById('pricingTiers');
+        const totalPrice = document.getElementById('totalPrice');
+        const termsAndConditions = document.getElementById('termsAndConditions');
+        const caseFields = document.getElementById('caseFields');
+        const addFieldButton = document.getElementById('addFieldButton');
+        const addCaseFieldButton = document.getElementById('addCaseField');
 
-    const prices = {
-        monthly: { upto2: 9.99, upto4: 19.98, upto6: 29.97, unlimited: 49.99 },
-        annual: { upto2: 99.99, upto4: 199.98, upto6: 299.97, unlimited: 499.99 }
-    };
+        const prices = {
+            monthly: { upto2: 9.99, upto4: 19.98, upto6: 29.97, unlimited: 49.99 },
+            annual: { upto2: 99.99, upto4: 199.98, upto6: 299.97, unlimited: 499.99 }
+        };
 
-    socialMediaSelector.addEventListener('change', function() {
-        socialMediaHandle.placeholder = `${this.value.charAt(0).toUpperCase() + this.value.slice(1)} Handle`;
-    });
-
-    function updatePrices() {
-        const cycle = document.querySelector('input[name="billingCycle"]:checked').id;
-        pricingTiers.querySelectorAll('button').forEach(button => {
-            const tier = button.dataset.tier;
-            const docketText = tier === 'unlimited' ? 'Unlimited dockets*' : `Up to ${tier.replace('upto', '')} dockets`;
-            const priceText = `$${prices[cycle][tier].toFixed(2)}`;
-
-            // Update the dockets and price span separately
-            button.querySelector('.dockets').textContent = docketText;
-            button.querySelector('.price').textContent = priceText;
+        socialMediaSelector.addEventListener('change', function () {
+            socialMediaHandle.placeholder = `${this.value.charAt(0).toUpperCase() + this.value.slice(1)} Handle`;
         });
-        updateTotal();
-    }
 
-    billingCycleRadios.forEach(radio => {
-        radio.addEventListener('change', updatePrices);
-    });
+        function updatePrices() {
+            const cycle = document.querySelector('input[name="billingCycle"]:checked').id;
+            pricingTiers.querySelectorAll('button').forEach(button => {
+                const tier = button.dataset.tier;
+                const docketText = tier === 'unlimited' ? 'Unlimited dockets*' : `Up to ${tier.replace('upto', '')} dockets`;
+                const priceText = `$${prices[cycle][tier].toFixed(2)}`;
 
-    pricingTiers.addEventListener('click', function(e) {
-        if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-            const selectedButton = e.target.closest('button');
-            pricingTiers.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            selectedButton.classList.add('active');
-            const selectedTier = selectedButton.dataset.tier;
+                button.querySelector('.dockets').textContent = docketText;
+                button.querySelector('.price').textContent = priceText;
 
-            // Show/Hide Terms and Conditions based on the selected tier
-            if (selectedTier === 'unlimited') {
-                termsAndConditions.style.display = 'block';
-            } else {
-                termsAndConditions.style.display = 'none';
-            }
-
-            updateCaseNumberFields(selectedTier);
+                const annualPriceElement = button.querySelector('.annual-price');
+                if (cycle === 'annual') {
+                    annualPriceElement.style.display = 'block';
+                } else {
+                    annualPriceElement.style.display = 'none';
+                }
+            });
             updateTotal();
         }
-    });
 
-    function updateCaseNumberFields(tier) {
-        caseNumberFields.innerHTML = '';
-        addFieldButton.style.display = 'none';
+        billingCycleRadios.forEach(radio => {
+            radio.addEventListener('change', updatePrices);
+        });
 
-        const fieldCount = tier === 'unlimited' ? 3 : parseInt(tier.replace('upto', ''));
-        for (let i = 1; i <= fieldCount; i++) {
-            addCaseNumberField(i);
+        pricingTiers.addEventListener('click', function (e) {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                const selectedButton = e.target.closest('button');
+                pricingTiers.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                selectedButton.classList.add('active');
+                const selectedTier = selectedButton.dataset.tier;
+
+                if (selectedTier === 'unlimited') {
+                    termsAndConditions.style.display = 'block';
+                } else {
+                    termsAndConditions.style.display = 'none';
+                }
+
+                updateCaseFields(selectedTier);
+                updateTotal();
+            }
+        });
+
+        function updateCaseFields(tier) {
+            caseFields.innerHTML = '';
+            addFieldButton.style.display = 'none';
+
+            const fieldCount = tier === 'unlimited' ? 3 : parseInt(tier.replace('upto', ''));
+            for (let i = 1; i <= fieldCount; i++) {
+                addCaseField();
+            }
+
+            if (tier === 'unlimited') {
+                addFieldButton.style.display = 'block';
+            }
         }
 
-        if (tier === 'unlimited') {
-            addFieldButton.style.display = 'block';
+        function addCaseField() {
+            const row = document.createElement('div');
+            row.className = 'row mb-2';
+
+            const caseNumberCol = document.createElement('div');
+            caseNumberCol.className = 'col-md-6 mb-2 mb-md-0';
+            const caseNumberInput = document.createElement('input');
+            caseNumberInput.type = 'text';
+            caseNumberInput.className = 'form-control';
+            caseNumberInput.placeholder = `Case number ${caseFields.children.length + 1}`;
+            caseNumberInput.required = true;
+            caseNumberCol.appendChild(caseNumberInput);
+
+            const caseDetailsCol = document.createElement('div');
+            caseDetailsCol.className = 'col-md-6';
+            const caseDetailsInput = document.createElement('input');
+            caseDetailsInput.type = 'text';
+            caseDetailsInput.className = 'form-control';
+            caseDetailsInput.placeholder = `Case details ${caseFields.children.length + 1}`;
+            caseDetailsInput.required = true;
+            caseDetailsCol.appendChild(caseDetailsInput);
+
+            row.appendChild(caseNumberCol);
+            row.appendChild(caseDetailsCol);
+            caseFields.appendChild(row);
         }
-    }
 
-    function addCaseNumberField(index) {
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.className = 'form-control mb-2';
-        input.placeholder = `Case number ${index}`;
-        input.required = true;
-        caseNumberFields.appendChild(input);
-    }
+        addCaseFieldButton.addEventListener('click', addCaseField);
 
-    addCaseFieldButton.addEventListener('click', function() {
-        addCaseNumberField(caseNumberFields.children.length + 1);
-    });
-
-    function updateTotal() {
-        const cycle = document.querySelector('input[name="billingCycle"]:checked').id;
-        const selectedTier = pricingTiers.querySelector('button.active');
-        if (selectedTier) {
-            const tier = selectedTier.dataset.tier;
-            totalPrice.textContent = prices[cycle][tier].toFixed(2);
+        function updateTotal() {
+            const cycle = document.querySelector('input[name="billingCycle"]:checked').id;
+            const selectedTier = pricingTiers.querySelector('button.active');
+            if (selectedTier) {
+                const tier = selectedTier.dataset.tier;
+                totalPrice.textContent = prices[cycle][tier].toFixed(2);
+            }
         }
-    }
 
-    // Initialize the form
-    updatePrices();
-    pricingTiers.querySelector('button[data-tier="upto2"]').click();
+        // Initialize the form
+        updatePrices();
+        pricingTiers.querySelector('button[data-tier="upto2"]').click();
 
-    document.getElementById('registrationForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Form submitted successfully! (This is a demo)');
+        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Form submitted successfully! (This is a demo)');
+        });
     });
-});
-
-    </script>
+</script>
