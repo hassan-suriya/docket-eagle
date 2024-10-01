@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Sign In";
 }
-
+@model Docket_Eagle.Models.ViewModels.SignInViewModel;
 
     <link rel="stylesheet" href="~/css/Signin.css" asp-append-version="true" />
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -33,14 +33,14 @@
                 <div class="col-md-6 col-lg-5">
                     <div class="form-container animate-fade-in">
                         <h2 class="text-center mb-4">Sign In</h2>
-                        <form id="signinForm">
+                        <form asp-action="HandleSignin" asp-controller="Auth" id="signinForm">
                             <div class="mb-3">
-                                <input type="email" class="form-control" id="email" placeholder="Email address" required>
+                                <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Email address" required>
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                                <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Password" required>
                             </div>
-                            <button asp-action="Client" asp-controller="Dashboard" class="btn btn-primary btn-signin">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-signin">Sign In</button>
                         </form>
                         <div class="text-center mt-3">
                         <p>Don't have an account? <a asp-controller="Auth" asp-action="Register" class="text-primary">Register</a></p>

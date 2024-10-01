@@ -1,4 +1,6 @@
-﻿@{
+﻿@model DocketEagle.Models.RegisterViewModel
+
+@{
     ViewData["Title"] = "Register";
 }
 
@@ -31,21 +33,28 @@
             <div class="col-12 col-md-10 col-lg-8">
                 <div class="form-container">
                     <h2 class="text-center">Register for DocketEagle</h2>
-                    <form id="registrationForm">
+                    <form asp-action="HandleRegister" asp-controller="Auth" method="post" id="registrationForm">
                         <div class="row mb-3">
                             <div class="col-md-6 mb-3 mb-md-0">
-                                <input type="text" class="form-control" placeholder="First Name" required>
+                                <input asp-for="FirstName" class="form-control" placeholder="First Name" required />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" placeholder="Last Name" required>
+                                <input asp-for="LastName" class="form-control" placeholder="Last Name" required />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" placeholder="Email address" required>
+                            <input asp-for="Email" class="form-control" placeholder="Email address" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <input asp-for="Password" class="form-control" placeholder="Password" type="password" required />
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6 mb-3 mb-md-0">
-                                <select id="socialMediaSelector" class="form-select" required>
+                                <select asp-for="SocialMedia" class="form-select" required>
                                     <option value="" selected disabled>Select Social Media for Updates</option>
                                     <option value="facebook">Facebook</option>
                                     <option value="twitter">Twitter</option>
@@ -57,25 +66,28 @@
                                     <option value="Messenger">Messenger</option>
                                     <option value="Telegram">Telegram</option>
                                 </select>
+                                <span asp-validation-for="SocialMedia" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="socialMediaHandle" class="form-control" placeholder="Social Media Handle" required>
+                                <input asp-for="SocialMediaHandle" class="form-control" placeholder="Social Media Handle" required />
+                                <span asp-validation-for="SocialMediaHandle" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="mb-3 text-center">
                             <h3 class="section-heading">Billing Cycle</h3>
                             <div class="btn-group d-flex flex-wrap" role="group" aria-label="Billing Cycle">
-                                <input type="radio" class="btn-check" name="billingCycle" id="monthly" autocomplete="off" checked>
+                                <input asp-for="BillingCycle" type="radio" class="btn-check" id="monthly" value="monthly" autocomplete="off" checked />
                                 <label class="btn btn-outline-primary flex-grow-1" for="monthly">Monthly</label>
-                                <input type="radio" class="btn-check" name="billingCycle" id="annual" autocomplete="off">
+                                <input asp-for="BillingCycle" type="radio" class="btn-check" id="annual" value="annual" autocomplete="off" />
                                 <label class="btn btn-outline-primary flex-grow-1" for="annual">Annual</label>
                             </div>
+                            <span asp-validation-for="BillingCycle" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <h3 class="section-heading text-center">Select Your Plan</h3>
-                            <p class="mt-2 mb-3 text-center">Introductory offer for first 100 (Pioneer) Subscribers </p>
+                            <p class="mt-2 mb-3 text-center">Introductory offer for first 100 (Pioneer) Subscribers</p>
                             <div class="row" id="pricingTiers">
                                 <div class="col-6 col-md-3 mb-2">
                                     <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="upto2">
@@ -83,7 +95,6 @@
                                         <span class="price">$9.99</span>
                                         <span class="annual-price" style="display: none;">
                                             <span class="original-price"><s>$119.99</s></span>
-                                           
                                         </span>
                                     </button>
                                 </div>
@@ -93,7 +104,7 @@
                                         <span class="price">$19.98</span>
                                         <span class="annual-price" style="display: none;">
                                             <span class="original-price"><s>$239.98</s></span>
-                                           
+
                                         </span>
                                     </button>
                                 </div>
@@ -103,7 +114,7 @@
                                         <span class="price">$29.97</span>
                                         <span class="annual-price" style="display: none;">
                                             <span class="original-price"><s>$359.97</s></span>
-                                           
+
                                         </span>
                                     </button>
                                 </div>
@@ -113,11 +124,13 @@
                                         <span class="price">$49.99</span>
                                         <span class="annual-price" style="display: none;">
                                             <span class="original-price"><s>$599.99</s></span>
-                                           
+
                                         </span>
                                     </button>
                                 </div>
+                                <input asp-for="Plan" name="Plan" style="display:none;"/>
                             </div>
+                            <span asp-validation-for="Plan" class="text-danger"></span>
                         </div>
 
                         <div id="termsAndConditions" class="text-danger text-center mt-3" style="display: none;">
@@ -127,22 +140,37 @@
                         <div class="mb-3 mt-3">
                             <h3 class="section-heading text-center">Case Numbers & Court Details</h3>
                             <div id="caseFields">
-                                <!-- Case fields will be dynamically added here -->
+                                @for (int i = 0; i < Model.CaseDetails.Count; i++)
+                                {
+                                    <div class="row mb-2">
+                                        <div class="col-md-6 mb-2 mb-md-0">
+                                            <input asp-for="@Model.CaseDetails[i].CaseNumber" name="CaseDetails[@i].CaseNumber" class="form-control" placeholder="Case number @(i + 1)" required />
+                                            <span asp-validation-for="@Model.CaseDetails[i].CaseNumber" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="@Model.CaseDetails[i].CourtDetails" name="CaseDetails[@i].CourtDetails" class="form-control" placeholder="Court details @(i + 1)" required />
+                                            <span asp-validation-for="@Model.CaseDetails[i].CourtDetails" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                             <div id="addFieldButton" class="text-center mt-2" style="display: none;">
                                 <button type="button" class="btn btn-outline-primary btn-sm" id="addCaseField">+ Add Case</button>
                             </div>
                         </div>
 
+
                         <div class="mb-3 text-center">
                             <h4>Total: $<span id="totalPrice">9.99</span></h4>
                             <p class="mt-2 mb-0">Auto-renewal does not apply.</p>
                         </div>
+
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                            <input asp-for="AgreeToTerms" type="checkbox" class="form-check-input" id="termsCheck" required />
                             <label class="form-check-label" for="termsCheck">
                                 I agree to the <a href="terms-and-conditions.html" target="_blank">Terms and Conditions</a>
                             </label>
+                            <span asp-validation-for="AgreeToTerms" class="text-danger"></span>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Register/Checkout</button>
                     </form>
@@ -167,9 +195,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const socialMediaSelector = document.getElementById('socialMediaSelector');
-        const socialMediaHandle = document.getElementById('socialMediaHandle');
-        const billingCycleRadios = document.querySelectorAll('input[name="billingCycle"]');
+        const billingCycleRadios = document.querySelectorAll('input[name="BillingCycle"]');
         const pricingTiers = document.getElementById('pricingTiers');
         const totalPrice = document.getElementById('totalPrice');
         const termsAndConditions = document.getElementById('termsAndConditions');
@@ -177,17 +203,18 @@
         const addFieldButton = document.getElementById('addFieldButton');
         const addCaseFieldButton = document.getElementById('addCaseField');
 
+        let caseIndex = 0;
+
+        // Prices for both monthly and annual plans
         const prices = {
             monthly: { upto2: 9.99, upto4: 19.98, upto6: 29.97, unlimited: 49.99 },
             annual: { upto2: 99.99, upto4: 199.98, upto6: 299.97, unlimited: 499.99 }
         };
 
-        socialMediaSelector.addEventListener('change', function () {
-            socialMediaHandle.placeholder = `${this.value.charAt(0).toUpperCase() + this.value.slice(1)} Handle`;
-        });
-
+        // Updates the displayed prices based on the selected billing cycle and plan
         function updatePrices() {
-            const cycle = document.querySelector('input[name="billingCycle"]:checked').id;
+
+            const cycle = document.querySelector('input[name="BillingCycle"]:checked').id;
             pricingTiers.querySelectorAll('button').forEach(button => {
                 const tier = button.dataset.tier;
                 const docketText = tier === 'unlimited' ? 'Unlimited dockets*' : `Up to ${tier.replace('upto', '')} dockets`;
@@ -206,17 +233,31 @@
             updateTotal();
         }
 
+        // Calculate and display the total price based on the selected plan and billing cycle
+        function updateTotal() {
+            const cycle = document.querySelector('input[name="BillingCycle"]:checked').id;
+            const selectedTier = pricingTiers.querySelector('button.active');
+            if (selectedTier) {
+                const tier = selectedTier.dataset.tier;
+                totalPrice.textContent = prices[cycle][tier].toFixed(2);
+            }
+        }
+
+        // Handle billing cycle changes (monthly or annual)
         billingCycleRadios.forEach(radio => {
             radio.addEventListener('change', updatePrices);
         });
 
+        // Handle plan selection and update price accordingly
         pricingTiers.addEventListener('click', function (e) {
-            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-                const selectedButton = e.target.closest('button');
+            const targetButton = e.target.closest('button');
+            const planField = document.querySelector('input[name="Plan"]');
+            if (targetButton) {
                 pricingTiers.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                selectedButton.classList.add('active');
-                const selectedTier = selectedButton.dataset.tier;
-
+                targetButton.classList.add('active');
+                const selectedTier = targetButton.dataset.tier;
+                planField.value = selectedTier;
+                // Show terms only for the "unlimited" plan
                 if (selectedTier === 'unlimited') {
                     termsAndConditions.style.display = 'block';
                 } else {
@@ -228,20 +269,24 @@
             }
         });
 
+        // Dynamically update the number of case fields based on the selected plan
         function updateCaseFields(tier) {
-            caseFields.innerHTML = '';
-            addFieldButton.style.display = 'none';
-
-            const fieldCount = tier === 'unlimited' ? 3 : parseInt(tier.replace('upto', ''));
+            caseFields.innerHTML = ''; // Clear existing case fields
+            caseIndex = 0; // Reset index
+            const fieldCount = tier === 'unlimited' ? 2 : parseInt(tier.replace('upto', ''));
             for (let i = 1; i <= fieldCount; i++) {
                 addCaseField();
             }
 
+            // Show the "Add Case" button only for the unlimited plan
             if (tier === 'unlimited') {
                 addFieldButton.style.display = 'block';
+            } else {
+                addFieldButton.style.display = 'none';
             }
         }
 
+        // Function to dynamically add a case field to the form
         function addCaseField() {
             const row = document.createElement('div');
             row.className = 'row mb-2';
@@ -251,7 +296,8 @@
             const caseNumberInput = document.createElement('input');
             caseNumberInput.type = 'text';
             caseNumberInput.className = 'form-control';
-            caseNumberInput.placeholder = `Case number ${caseFields.children.length + 1}`;
+            caseNumberInput.name = `CaseDetails[${caseIndex}].CaseNumber`;
+            caseNumberInput.placeholder = `Case number ${caseIndex + 1}`;
             caseNumberInput.required = true;
             caseNumberCol.appendChild(caseNumberInput);
 
@@ -260,33 +306,30 @@
             const courtDetailsInput = document.createElement('input');
             courtDetailsInput.type = 'text';
             courtDetailsInput.className = 'form-control';
-            courtDetailsInput.placeholder = `Court details ${caseFields.children.length + 1}`;
+            courtDetailsInput.name = `CaseDetails[${caseIndex}].CourtDetails`;
+            courtDetailsInput.placeholder = `Court details ${caseIndex + 1}`;
             courtDetailsInput.required = true;
             courtDetailsCol.appendChild(courtDetailsInput);
 
             row.appendChild(caseNumberCol);
             row.appendChild(courtDetailsCol);
             caseFields.appendChild(row);
+
+            caseIndex++; // Increment the case index for the next field
         }
 
-        addCaseFieldButton.addEventListener('click', addCaseField);
+        // Add more case fields when the "Add Case" button is clicked (for unlimited plan)
+        addCaseFieldButton.addEventListener('click', () => addCaseField());
 
-        function updateTotal() {
-            const cycle = document.querySelector('input[name="billingCycle"]:checked').id;
-            const selectedTier = pricingTiers.querySelector('button.active');
-            if (selectedTier) {
-                const tier = selectedTier.dataset.tier;
-                totalPrice.textContent = prices[cycle][tier].toFixed(2);
-            }
-        }
+        // Initialize with 2 case fields for the default "Up to 2" plan
+        pricingTiers.querySelector('button[data-tier="upto2"]').classList.add('active');
+        updateCaseFields('upto2'); // Set 2 fields initially
+        updatePrices(); // Initialize prices
 
-        // Initialize the form
-        updatePrices();
-        pricingTiers.querySelector('button[data-tier="upto2"]').click();
-
-        document.getElementById('registrationForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            alert('Form submitted successfully! (This is a demo)');
-        });
+        // Form submission handler (for demo purposes)
+        // document.getElementById('registrationForm').addEventListener('submit', function (e) {
+        //     e.preventDefault(); // Prevent actual form submission (demo)
+        //     alert('Form submitted successfully!');
+        // });
     });
 </script>
