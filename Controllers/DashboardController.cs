@@ -17,7 +17,7 @@ namespace Docket_Eagle.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var claims = User.Claims.ToList();
-                if(claims[1].Value == "Admin")
+                if(claims[0].Value == "Admin")
                 {
                     var users = await _userRepository.GetAllAsync();
                     return View(new AdminViewModel() { Users=users});
@@ -31,9 +31,9 @@ namespace Docket_Eagle.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var claims = User.Claims.ToList();
-                if (claims[1].Value == "User")
+                if (claims[0].Value == "User")
                 {
-                    var user=await _userRepository.GetByIdAsync(claims[0].Value);
+                    var user=await _userRepository.GetByIdAsync(claims[1].Value);
                     return View(new ClientViewModel() { User=user});
                 }
             }

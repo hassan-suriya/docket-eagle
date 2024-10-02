@@ -22,9 +22,9 @@ namespace Docket_Eagle.Controllers
                 return View();
             }
             var claims = User.Claims.ToList();
-            if (claims[1].Value == "Admin")
+            if (claims[0].Value == "Admin")
             {
-                return RedirectToAction("Admin","Dashboard");
+                return RedirectToAction("Admin", "Dashboard");
             }
             return RedirectToAction("Client", "Dashboard");
         }
