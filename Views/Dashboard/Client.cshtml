@@ -1,12 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Client Dashboard";
 }
+@model Docket_Eagle.Models.ViewModels.ClientViewModel;
 
 <link rel="stylesheet" href="~/css/Client-dashboard.css" asp-append-version="true" />
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            DocketEagle
+            DocketEagle - Client Portal
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,65 +16,73 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="btn btn-outline-light" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a asp-action="Logout" asp-controller="Auth" class="btn btn-outline-light btn-sm" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main class="main-content container-fluid">
-    <!-- Dashboard Header -->
-    <h2 class="dashboard-header">Client Case Overview</h2>
-
-    <!-- Subscription Info (Common for all cases) -->
+    @{
+        var subscriptionEnd = Model.User.BillingCycle == "Monthly"
+        ? Model.User.SubscriptionStart.AddDays(30)
+        : Model.User.SubscriptionStart.AddDays(365);
+    }
     <div class="subscription-info">
-        <h4>Subscription: Annualy</h4>
-        <p>Subscription End Date: 2024-01-05</p>
+        <h5>Welcome @Model.User.Fullname!</h5>
+        <p><b>Subscription: </b>@Model.User.BillingCycle <b>Subscription End Date:</b> @subscriptionEnd</p>
+        <p></p>
     </div>
 
-    <!-- Case Cards -->
     <div class="row" id="caseCards">
-        <!-- Dynamic cards will be inserted here -->
+        @foreach(var item in Model.User.CaseDetails)
+        {
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="case-card">
+                    <h5>Case Number: @item.CaseNumber</h5>
+                    <h5>Court Detail: @item.CourtDetails</h5>
+                </div>
+            </div>
+        }
     </div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Mock data for cases
-    const caseData = [
-        { caseNumber: "2023-TR-001" },
-        { caseNumber: "2023-PT-002" },
-        { caseNumber: "2023-CS-003" },
-        { caseNumber: "2023-TR-004" },
-        { caseNumber: "2023-CS-005" },
-        // Add more cases as needed...
-    ];
+    // // Mock data for cases
+    // const caseData = [
+    //     { caseNumber: "2023-TR-001" },
+    //     { caseNumber: "2023-PT-002" },
+    //     { caseNumber: "2023-CS-003" },
+    //     { caseNumber: "2023-TR-004" },
+    //     { caseNumber: "2023-CS-005" },
+    //     // Add more cases as needed...
+    // ];
 
-    // Function to render case cards dynamically
-    function renderCaseCards() {
-        const caseCardsContainer = document.getElementById('caseCards');
-        caseCardsContainer.innerHTML = ''; // Clear the container before adding new cards
+    // // Function to render case cards dynamically
+    // function renderCaseCards() {
+    //     const caseCardsContainer = document.getElementById('caseCards');
+    //     caseCardsContainer.innerHTML = ''; // Clear the container before adding new cards
 
-        caseData.forEach(item => {
-            const card = document.createElement('div');
-            card.classList.add('col-md-4', 'col-sm-6', 'col-xs-12');
-            card.innerHTML = `
-                        <div class="case-card">
-                            <h5>Case Number: ${item.caseNumber}</h5>
-                        </div>
-                    `;
-            caseCardsContainer.appendChild(card);
-        });
-    }
+    //     caseData.forEach(item => {
+    //         const card = document.createElement('div');
+    //         card.classList.add('col-md-4', 'col-sm-6', 'col-xs-12');
+    //         card.innerHTML = `
+    //                     <div class="case-card">
+    //                         <h5>Case Number: ${item.caseNumber}</h5>
+    //                     </div>
+    //                 `;
+    //         caseCardsContainer.appendChild(card);
+    //     });
+    // }
 
-    // Initial render of case cards
-    renderCaseCards();
+    // // Initial render of case cards
+    // renderCaseCards();
 
-    // Event listener for logout
-    document.getElementById('logoutBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('Logout functionality would be implemented here.');
-    });
+    // // Event listener for logout
+    // document.getElementById('logoutBtn').addEventListener('click', (e) => {
+    //     e.preventDefault();
+    //     alert('Logout functionality would be implemented here.');
+    // });
 </script>

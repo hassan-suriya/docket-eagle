@@ -22,7 +22,7 @@ namespace Docket_Eagle.Controllers
                 return View();
             }
             var claims = User.Claims.ToList();
-            if (claims[0].Value == "Admin")
+            if (claims[1].Value == "Admin")
             {
                 return RedirectToAction("Admin","Dashboard");
             }
@@ -45,7 +45,9 @@ namespace Docket_Eagle.Controllers
                     await HttpContext.SignInAsync("authCookie", new ClaimsPrincipal(
                        new ClaimsIdentity(new List<Claim>
                        {
-                             new Claim(ClaimTypes.Role, user.Role)
+                             
+                             new Claim(ClaimTypes.Role, user.Role),
+                             new Claim(user.Id, user.Id),
                        },
                        "authCookie")));
                     if (user.Role == "Admin")
