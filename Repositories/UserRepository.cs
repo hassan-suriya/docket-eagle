@@ -41,4 +41,20 @@ public class UserRepository :IUserRepository
     {
         await _collection.DeleteOneAsync(e => e.Id == id);
     }
+    public async Task MarkAsPaid(string id)
+    {
+        var update = Builders<User>.Update.Set(u => u.PaymentStatus, true);
+        await _collection.UpdateOneAsync(e => e.Id == id, update);
+    }
+    public async Task ActivateUser(string id)
+    {
+        var update = Builders<User>.Update.Set(u => u.Status,true);
+        await _collection.UpdateOneAsync(e => e.Id == id, update);
+    }
+
+    public async Task DeactivateUser(string id)
+    {
+        var update = Builders<User>.Update.Set(u => u.Status, false);
+        await _collection.UpdateOneAsync(e => e.Id == id, update);
+    }
 }

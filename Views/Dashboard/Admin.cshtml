@@ -1,22 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Admin Dashboard";
 }
-
+@model Docket_Eagle.Models.ViewModels.AdminViewModel;
 <link rel="stylesheet" href="~/css/Admin-dashboard.css" asp-append-version="true" />
 
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            DocketEagle
+            DocketEagle - Admin Portal
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="btn btn-outline-light" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a asp-action="Logout" asp-controller="Auth" class="btn btn-outline-light btn-sm" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </li>
             </ul>
         </div>
@@ -25,35 +21,147 @@
 
 <!-- Main Content -->
 <main class="main-content container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="customer-portal-header">Admin Portal</h2>
-
-        <form class="d-flex search-bar" id="searchForm">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchInput">
-            <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
-        </form>
-    </div>
-
-    <h4 class="subscription-info">Subscription: Monthly</h4>
-
     <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <!-- Filters Section -->
+        <div class="filters mb-3">
+            <div class="row g-2 mt-1">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text" id="searchIcon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Search by name, email, etc.">
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <select id="statusFilter" class="form-select form-select-sm">
+                        <option value="">All Statuses</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select id="billingCycleFilter" class="form-select form-select-sm">
+                        <option value="">All Billing Cycles</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Annually">Annually</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <select id="planFilter" class="form-select form-select-sm">
+                        <option value="">All Plans</option>
+                        <option value="Upto2">Up to 2 dockets</option>
+                        <option value="Upto4">Up to 4 dockets</option>
+                        <option value="Upto6">Up to 6 dockets</option>
+                        <option value="Unlimited">Unlimited dockets</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select id="paymentStatusFilter" class="form-select form-select-sm">
+                        <option value="">All Payment Status</option>
+                        <option value="Paid">Paid</option>
+                        <option value="Not Paid">Not Paid</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Date Filters Section -->
+        <div class="filters mb-4">
+            <div class="row g-2">
+                <div class="col-md-6">
+
+                    <span>Start Subscription Date</span>
+                    <input type="date" id="startDateFilter" class="form-control form-control-sm" placeholder="Start Subscription Date" title="Start Subscription Date">
+                </div>
+                <div class="col-md-6">
+                    <span>End Subscription Date</span>
+                    <input type="date" id="endDateFilter" class="form-control form-control-sm" placeholder="End Subscription Date" title="End Subscription Date">
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-striped table-hover table-sm">
             <thead>
                 <tr>
-                    <th>Full Name</th>
+                    <th>Name</th>
                     <th>Email</th>
-                    <th>Social Media Service</th>
-                    <th>Social Media Account</th>
+                    <th>Service</th>
+                    <th>Account</th>
                     <th>Case Numbers</th>
+                    <th>Court Details</th>
                     <th>Subscription Start</th>
                     <th>Subscription End</th>
-                    <th>Subscription Type</th>
-                    <th>Status</th>
+                    <th>Plan</th>
+                    <th>Billing Cycle</th>
+                    <th>Payment Status</th>
+                    <th>Account Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <!-- Table rows will be dynamically populated here -->
+                
+                @foreach (var user in Model.Users)
+                {
+                    if (user.Role != "Admin")
+                    {
+                        var subscriptionEnd = user.BillingCycle == "Monthly"
+                        ? user.SubscriptionStart.AddDays(30)
+                        : user.SubscriptionStart.AddDays(365);
+                        var paymentStatus = user.PaymentStatus ? "Paid" : "Not Paid";
+                        var status = user.Status ? "Active" : "Inactive";
+
+                        <tr>
+                            <td class="searchable">@user.Fullname</td>
+                            <td class="searchable">@user.Email</td>
+                            <td class="searchable">@user.SocialMedia</td>
+                            <td class="searchable">@user.SocialMediaHandle</td>
+                            <td class="searchable">@string.Join(", ", user.CaseDetails.Select(cd => cd.CaseNumber))</td>
+                            <td class="searchable">@string.Join(", ", user.CaseDetails.Select(cd => cd.CourtDetails))</td>
+                            <td>@user.SubscriptionStart.ToString("yyyy-MM-dd")</td>
+                            <td>@subscriptionEnd.ToString("yyyy-MM-dd")</td>
+                            <td>@user.Plan</td>
+                            <td>@user.BillingCycle</td>
+                            <td>@paymentStatus</td>
+                            <td>@status</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-danger btn-action" title="Delete User" data-toggle="tooltip"
+                                   asp-action="DeleteUser" asp-controller="User" asp-route-userId="@user.Id">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+
+                                @if (!user.PaymentStatus)
+                                {
+                                    <a class="btn btn-sm btn-outline-success btn-action" title="Mark as Paid" data-toggle="tooltip"
+                                       asp-action="MarkAsPaid" asp-controller="User" asp-route-userId="@user.Id">
+                                        <i class="fas fa-check-circle"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-sm btn-outline-secondary btn-action" title="User has already paid" data-toggle="tooltip" disabled>
+                                        <i class="fas fa-check-circle"></i>
+                                    </button>
+                                }
+
+                                @if (user.Status)
+                                {
+                                    <a class="btn btn-sm btn-outline-warning btn-action" title="Deactivate User" data-toggle="tooltip"
+                                       asp-action="DeactivateUser" asp-controller="User" asp-route-userId="@user.Id">
+                                        <i class="fas fa-user-slash"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-sm btn-outline-info btn-action" title="Activate User" data-toggle="tooltip"
+                                       asp-action="ActivateUser" asp-controller="User" asp-route-userId="@user.Id">
+                                        <i class="fas fa-user-check"></i>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     </div>
@@ -61,107 +169,91 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Mock data
-    const mockData = [
-        {
-            id: 1,
-            fullName: "John Doe",
-            email: "john@example.com",
-            socialMediaService: "Facebook",
-            socialMediaAccount: "johndoe_fb",
-            caseNumbers: "123, 456, 789",
-            subscriptionStart: "2023-01-01",
-            subscriptionEnd: "2023-12-31",
-            subscriptionType: "Upto 6",
-            status: "Enabled"
-        },
-        {
-            id: 2,
-            fullName: "Jane Smith",
-            email: "jane@example.com",
-            socialMediaService: "Twitter",
-            socialMediaAccount: "janesmith_tw",
-            caseNumbers: "222, 333, 444",
-            subscriptionStart: "2023-01-05",
-            subscriptionEnd: "2024-01-05",
-            subscriptionType: "Upto 2",
-            status: "Enabled"
-        },
-        // Add more mock data here...
-    ];
-
-    // Function to render table rows
-    function renderTable() {
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchInput');
+        const statusFilter = document.getElementById('statusFilter');
+        const billingCycleFilter = document.getElementById('billingCycleFilter');
+        const planFilter = document.getElementById('planFilter');
+        const paymentStatusFilter = document.getElementById('paymentStatusFilter');
+        const startDateFilter = document.getElementById('startDateFilter');
+        const endDateFilter = document.getElementById('endDateFilter');
         const tableBody = document.getElementById('tableBody');
-        tableBody.innerHTML = ''; // Clear table body before rendering new rows
+        const rows = tableBody.getElementsByTagName('tr');
 
-        mockData.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                        <td>${item.fullName}</td>
-                        <td>${item.email}</td>
-                        <td>${item.socialMediaService}</td>
-                        <td>${item.socialMediaAccount}</td>
-                        <td>${item.caseNumbers}</td>
-                        <td>${item.subscriptionStart}</td>
-                        <td>${item.subscriptionEnd}</td>
-                        <td><span class="badge bg-success">${item.subscriptionType}</span></td>
-                        <td><span class="badge bg-${item.status === 'Enabled' ? 'success' : 'danger'}">${item.status}</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-danger btn-action" onclick="deleteUser(${item.id})"><i class="fas fa-trash"></i></button>
-                            <button class="btn btn-sm btn-outline-warning btn-action" onclick="toggleStatus(${item.id})"><i class="fas fa-toggle-on"></i></button>
-                            <button class="btn btn-sm btn-outline-info btn-action" onclick="viewInvoice(${item.id})"><i class="fas fa-file-invoice"></i></button>
-                        </td>
-                    `;
-            tableBody.appendChild(row);
-        });
-    }
+        function filterRows() {
+            const query = searchInput.value.toLowerCase();
+            const selectedStatus = statusFilter.value;
+            const selectedBillingCycle = billingCycleFilter.value;
+            const selectedPlan = planFilter.value;
+            const selectedPaymentStatus = paymentStatusFilter.value;
+            const selectedStartDate = startDateFilter.value;
+            const selectedEndDate = endDateFilter.value;
 
-    // Function to toggle status (Enable/Disable)
-    function toggleStatus(id) {
-        const user = mockData.find(item => item.id === id);
-        if (user) {
-            user.status = user.status === 'Enabled' ? 'Disabled' : 'Enabled';
-            renderTable(); // Re-render table after toggling
-        }
-    }
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                let found = true;
 
-    // Function to view invoice
-    function viewInvoice(id) {
-        alert(`Viewing invoice for user with ID: ${id}`);
-        // In a real application, this would open a modal or navigate to an invoice page
-    }
+                // Search by query
+                const cells = row.getElementsByClassName('searchable');
+                let searchMatch = false;
+                for (let j = 0; j < cells.length; j++) {
+                    const cellText = cells[j].innerText.toLowerCase();
+                    if (cellText.includes(query)) {
+                        searchMatch = true;
+                        break;
+                    }
+                }
+                if (!searchMatch) found = false;
 
-    // Function to handle search
-    function handleSearch(event) {
-        event.preventDefault();
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        const filteredData = mockData.filter(item =>
-            item.fullName.toLowerCase().includes(searchTerm) ||
-            item.email.toLowerCase().includes(searchTerm) ||
-            item.socialMediaAccount.toLowerCase().includes(searchTerm)
-        );
-        renderTable(filteredData);
-    }
+                // Filter by status
+                const statusText = row.cells[11].innerText;
+                if (selectedStatus && statusText !== selectedStatus) found = false;
 
-    // Function to delete user
-    function deleteUser(id) {
-        if (confirm('Are you sure you want to delete this user?')) {
-            const index = mockData.findIndex(item => item.id === id);
-            if (index !== -1) {
-                mockData.splice(index, 1); // Remove user from data
-                renderTable(); // Re-render table after deletion
+                // Filter by billing cycle
+                const billingCycleText = row.cells[9].innerText;
+                if (selectedBillingCycle && billingCycleText !== selectedBillingCycle) found = false;
+
+                // Filter by plan
+                const planText = row.cells[8].innerText;
+                if (selectedPlan && planText !== selectedPlan) found = false;
+
+                // Filter by payment status
+                const paymentStatusText = row.cells[10].innerText;
+                if (selectedPaymentStatus && paymentStatusText !== selectedPaymentStatus) found = false;
+
+                // Filter by subscription start date
+                const subscriptionStartText = row.cells[6].innerText;
+                if (selectedStartDate && new Date(subscriptionStartText) < new Date(selectedStartDate)) found = false;
+
+                // Filter by subscription end date
+                const subscriptionEndText = row.cells[7].innerText;
+                if (selectedEndDate && new Date(subscriptionEndText) > new Date(selectedEndDate)) found = false;
+
+                // Show or hide the row
+                row.style.display = found ? '' : 'none';
             }
         }
-    }
 
-    // Event listeners
-    document.getElementById('searchForm').addEventListener('submit', handleSearch);
-    document.getElementById('logoutBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('Logout functionality would be implemented here.');
+        // Attach event listeners to filters
+        searchInput.addEventListener('keyup', filterRows);
+        statusFilter.addEventListener('change', filterRows);
+        billingCycleFilter.addEventListener('change', filterRows);
+        planFilter.addEventListener('change', filterRows);
+        paymentStatusFilter.addEventListener('change', filterRows);
+        startDateFilter.addEventListener('change', filterRows);
+        endDateFilter.addEventListener('change', filterRows);
+    });
+    const dateInput = document.getElementById('dateInput');
+
+    // Set the date input type on focus
+    dateInput.addEventListener('focus', function () {
+        dateInput.type = 'date';
     });
 
-    // Initial render
-    renderTable();
+    // Revert to placeholder on blur if no date selected
+    dateInput.addEventListener('blur', function () {
+        if (!dateInput.value) {
+            dateInput.type = 'text';
+        }
+    });
 </script>

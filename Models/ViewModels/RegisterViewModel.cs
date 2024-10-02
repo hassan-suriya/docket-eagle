@@ -18,7 +18,12 @@ namespace DocketEagle.Models
         [EmailAddress]
         public string Email { get; set; }
 
+
         [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$",
+        ErrorMessage = "Password must be at least 6 characters long and contain an uppercase letter, a lowercase letter, a number, and a special character.")]
         public string Password { get; set; }
 
 

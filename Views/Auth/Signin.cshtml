@@ -34,6 +34,22 @@
                     <div class="form-container animate-fade-in">
                         <h2 class="text-center mb-4">Sign In</h2>
                         <form asp-action="HandleSignin" asp-controller="Auth" id="signinForm">
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success">
+                                @TempData["SuccessMessage"]
+                            </div>
+                        }
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <p>@error.ErrorMessage</p>
+                                }
+                            </div>
+                        }
+
                             <div class="mb-3">
                                 <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Email address" required>
                             </div>

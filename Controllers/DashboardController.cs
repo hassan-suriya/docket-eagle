@@ -1,18 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Docket_Eagle.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Docket_Eagle.Controllers
 {
     public class DashboardController : Controller
     {
+        private readonly IUserRepository _userRepository;
+
+        public DashboardController(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
         [Route("admin")]
-        public IActionResult Admin()
+        public async Task<IActionResult> Admin()
         {
             if (User.Identity.IsAuthenticated)
             {
                 var claims = User.Claims.ToList();
                 if(claims[0].Value == "Admin")
                 {
-                    return View();
+                    var users = await _userRepository.GetAllAsync();
+                    return View(new AdminViewModel() { Users=users});
                 }
             }
             return RedirectToAction("Signin", "Auth");

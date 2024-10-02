@@ -34,6 +34,16 @@
                 <div class="form-container">
                     <h2 class="text-center">Register for DocketEagle</h2>
                     <form asp-action="HandleRegister" asp-controller="Auth" method="post" id="registrationForm">
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <p>@error.ErrorMessage</p>
+                                }
+                            </div>
+                        }
+
                         <div class="row mb-3">
                             <div class="col-md-6 mb-3 mb-md-0">
                                 <input asp-for="FirstName" class="form-control" placeholder="First Name" required />
@@ -77,9 +87,9 @@
                         <div class="mb-3 text-center">
                             <h3 class="section-heading">Billing Cycle</h3>
                             <div class="btn-group d-flex flex-wrap" role="group" aria-label="Billing Cycle">
-                                <input asp-for="BillingCycle" type="radio" class="btn-check" id="monthly" value="monthly" autocomplete="off" checked />
+                                <input asp-for="BillingCycle" type="radio" class="btn-check" id="monthly" value="Monthly" autocomplete="off" checked />
                                 <label class="btn btn-outline-primary flex-grow-1" for="monthly">Monthly</label>
-                                <input asp-for="BillingCycle" type="radio" class="btn-check" id="annual" value="annual" autocomplete="off" />
+                                <input asp-for="BillingCycle" type="radio" class="btn-check" id="annual" value="Annually" autocomplete="off" />
                                 <label class="btn btn-outline-primary flex-grow-1" for="annual">Annual</label>
                             </div>
                             <span asp-validation-for="BillingCycle" class="text-danger"></span>
@@ -90,7 +100,7 @@
                             <p class="mt-2 mb-3 text-center">Introductory offer for first 100 (Pioneer) Subscribers</p>
                             <div class="row" id="pricingTiers">
                                 <div class="col-6 col-md-3 mb-2">
-                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="upto2">
+                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="Upto2">
                                         <span class="dockets">Up to 2 dockets</span>
                                         <span class="price">$9.99</span>
                                         <span class="annual-price" style="display: none;">
@@ -99,7 +109,7 @@
                                     </button>
                                 </div>
                                 <div class="col-6 col-md-3 mb-2">
-                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="upto4">
+                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="Upto4">
                                         <span class="dockets">Up to 4 dockets</span>
                                         <span class="price">$19.98</span>
                                         <span class="annual-price" style="display: none;">
@@ -109,7 +119,7 @@
                                     </button>
                                 </div>
                                 <div class="col-6 col-md-3 mb-2">
-                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="upto6">
+                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="Upto6">
                                         <span class="dockets">Up to 6 dockets</span>
                                         <span class="price">$29.97</span>
                                         <span class="annual-price" style="display: none;">
@@ -119,7 +129,7 @@
                                     </button>
                                 </div>
                                 <div class="col-6 col-md-3 mb-2">
-                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="unlimited">
+                                    <button type="button" class="btn btn-outline-primary w-100 pricing-button" data-tier="Unlimited">
                                         <span class="dockets">Unlimited dockets*</span>
                                         <span class="price">$49.99</span>
                                         <span class="annual-price" style="display: none;">
@@ -207,8 +217,8 @@
 
         // Prices for both monthly and annual plans
         const prices = {
-            monthly: { upto2: 9.99, upto4: 19.98, upto6: 29.97, unlimited: 49.99 },
-            annual: { upto2: 99.99, upto4: 199.98, upto6: 299.97, unlimited: 499.99 }
+            monthly: { Upto2: 9.99, Upto4: 19.98, Upto6: 29.97, Unlimited: 49.99 },
+            annual: { Upto2: 99.99, Upto4: 199.98, Upto6: 299.97, Unlimited: 499.99 }
         };
 
         // Updates the displayed prices based on the selected billing cycle and plan
@@ -217,7 +227,7 @@
             const cycle = document.querySelector('input[name="BillingCycle"]:checked').id;
             pricingTiers.querySelectorAll('button').forEach(button => {
                 const tier = button.dataset.tier;
-                const docketText = tier === 'unlimited' ? 'Unlimited dockets*' : `Up to ${tier.replace('upto', '')} dockets`;
+                const docketText = tier === 'Unlimited' ? 'Unlimited dockets*' : `Up to ${tier.replace('Upto', '')} dockets`;
                 const priceText = `$${prices[cycle][tier].toFixed(2)}`;
 
                 button.querySelector('.dockets').textContent = docketText;
@@ -258,7 +268,7 @@
                 const selectedTier = targetButton.dataset.tier;
                 planField.value = selectedTier;
                 // Show terms only for the "unlimited" plan
-                if (selectedTier === 'unlimited') {
+                if (selectedTier === 'Unlimited') {
                     termsAndConditions.style.display = 'block';
                 } else {
                     termsAndConditions.style.display = 'none';
@@ -273,13 +283,13 @@
         function updateCaseFields(tier) {
             caseFields.innerHTML = ''; // Clear existing case fields
             caseIndex = 0; // Reset index
-            const fieldCount = tier === 'unlimited' ? 2 : parseInt(tier.replace('upto', ''));
+            const fieldCount = tier === 'Unlimited' ? 2 : parseInt(tier.replace('Upto', ''));
             for (let i = 1; i <= fieldCount; i++) {
                 addCaseField();
             }
 
             // Show the "Add Case" button only for the unlimited plan
-            if (tier === 'unlimited') {
+            if (tier === 'Unlimited') {
                 addFieldButton.style.display = 'block';
             } else {
                 addFieldButton.style.display = 'none';
@@ -322,8 +332,8 @@
         addCaseFieldButton.addEventListener('click', () => addCaseField());
 
         // Initialize with 2 case fields for the default "Up to 2" plan
-        pricingTiers.querySelector('button[data-tier="upto2"]').classList.add('active');
-        updateCaseFields('upto2'); // Set 2 fields initially
+        pricingTiers.querySelector('button[data-tier="Upto2"]').classList.add('active');
+        updateCaseFields('Upto2'); // Set 2 fields initially
         updatePrices(); // Initialize prices
 
         // Form submission handler (for demo purposes)

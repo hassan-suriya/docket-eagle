@@ -17,7 +17,16 @@ namespace Docket_Eagle.Controllers
         [Route("signin")]
         public IActionResult Signin()
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            var claims = User.Claims.ToList();
+            if (claims[0].Value == "Admin")
+            {
+                return RedirectToAction("Admin","Dashboard");
+            }
+            return RedirectToAction("Client", "Dashboard");
         }
         [Route("register")]
         public IActionResult Register()
@@ -43,11 +52,27 @@ namespace Docket_Eagle.Controllers
                     {
                         return RedirectToAction("Admin", "Dashboard");
                     }
+                    if (user.PaymentStatus == false)
+                    {
+                        ModelState.AddModelError(string.Empty, "Signin Failed. Payment status not verified");
+                    }
+                    else if(user.Status == false)
+                    {
+                        ModelState.AddModelError(string.Empty, "Signin Failed. Account has been deactivated");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Client", "Dashboard");
+                    }
                    
-                    return RedirectToAction("Client", "Dashboard");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Signin Failed. Invalid Credentials");
+                   
                 }
             }
-            return RedirectToAction("Signin");
+            return View("Signin",model);
 
         }
 
@@ -57,9 +82,19 @@ namespace Docket_Eagle.Controllers
             if (ModelState.IsValid)
             {
                 await _userRepository.CreateAsync(new Models.User() { Fullname=model.FirstName+" "+model.LastName, Email=model.Email, Password= HashPassword.GetHashPassword(model.Password), Plan=model.Plan, SocialMedia=model.SocialMedia,SocialMediaHandle=model.SocialMediaHandle, BillingCycle=model.BillingCycle, CaseDetails=model.CaseDetails, Role="User"});
+                TempData["SuccessMessage"] = "Registration successful You can now sign in.";
                 return RedirectToAction("Signin");
             }
-            return RedirectToAction("Regiser");
+            ModelState.AddModelError(string.Empty, "Registration Failed. Invalid data entered");
+            return View("Register",model);
+
+        }
+
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync("authCookie");
+            return RedirectToAction("Signin", "Auth");
 
         }
     }

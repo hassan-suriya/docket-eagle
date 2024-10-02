@@ -9,4 +9,7 @@ public interface IUserRepository
     Task<User> GetByEmail(string email);
     Task<User> GetByIdAsync(string id);
     Task UpdateAsync(string id, User entity);
+    Task MarkAsPaid(string id);
+    Task ActivateUser(string id);
+    Task DeactivateUser(string id);
 }

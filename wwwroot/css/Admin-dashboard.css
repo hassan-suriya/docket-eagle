@@ -12,7 +12,7 @@
 
     .navbar .navbar-brand {
         color: white;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         font-weight: bold;
     }
 
@@ -31,6 +31,11 @@
         color: white;
         border-color: white;
     }
+
+        .navbar .navbar-nav .btn:hover {
+            background-color: white;
+            color: #0d6efd;
+        }
 
 /* Main content styling */
 .main-content {
@@ -71,6 +76,7 @@
     .table td {
         text-align: center;
         vertical-align: middle;
+        font-size: 11px;
     }
 
     .table th {
@@ -101,7 +107,9 @@
         font-size: 1.25rem;
         color: #6c757d;
     }
-
+.table-responsive{
+    overflow-x:unset;
+}
 /* Responsive design */
 @media (max-width: 768px) {
     .navbar {
