@@ -83,7 +83,7 @@ namespace Docket_Eagle.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _userRepository.CreateAsync(new Models.User() { Fullname=model.FirstName+" "+model.LastName, Email=model.Email, Password= HashPassword.GetHashPassword(model.Password), Plan=model.Plan, SocialMedia=model.SocialMedia,SocialMediaHandle=model.SocialMediaHandle, BillingCycle=model.BillingCycle, CaseDetails=model.CaseDetails, Role="User"});
+                await _userRepository.CreateAsync(new Models.User() { Fullname=model.FirstName+" "+model.LastName, Email=model.Email, Password= HashPassword.GetHashPassword(model.Password), Plan=model.Plan, SocialMedia=model.SocialMedia,SocialMediaHandle=model.SocialMediaHandle, BillingCycle=model.BillingCycle, CaseDetails=model.CaseDetails, Role="User",Number=model.Number});
                 TempData["SuccessMessage"] = "Registration successful You can now sign in.";
                 return RedirectToAction("Signin");
             }
