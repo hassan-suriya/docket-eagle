@@ -28,7 +28,7 @@ namespace Docket_Eagle.Controllers
             }
             return RedirectToAction("Client", "Dashboard");
         }
-        [Route("register")]
+        [Route("register")]  
         public IActionResult Register()
         {
             return View(new RegisterViewModel());
