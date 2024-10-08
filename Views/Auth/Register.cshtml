@@ -77,7 +77,7 @@
                                     <option value="instagram">Instagram</option>
                                     <option value="linkedin">LinkedIn</option>
                                     <option value="Email">Email</option>
-                                    <option value="Mobile">Phone/Mobile (Direct Call)</option>
+                                    <option value="Phone/Mobile (Direct Call)">Phone/Mobile (Direct Call)</option>
                                     <option value="SMS">SMS</option>
                                     <option value="Messenger">Messenger</option>
                                     <option value="Telegram">Telegram</option>
@@ -154,17 +154,17 @@
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <h3 class="section-heading text-center">Case Numbers & Court Details</h3>
+                            <h3 class="section-heading text-center">Trademark/Patent Filling No. <br /> OR <br /> Case No. & Court Details</h3>
                             <div id="caseFields">
                                 @for (int i = 0; i < Model.CaseDetails.Count; i++)
                                 {
                                     <div class="row mb-2">
                                         <div class="col-md-6 mb-2 mb-md-0">
-                                            <input asp-for="@Model.CaseDetails[i].CaseNumber" name="CaseDetails[@i].CaseNumber" class="form-control" placeholder="Case number @(i + 1)" required />
+                                            <input asp-for="@Model.CaseDetails[i].CaseNumber" name="CaseDetails[@i].CaseNumber" class="form-control" placeholder="Trademark/Patent Filling No. OR Case No. @(i + 1)" required />
                                             <span asp-validation-for="@Model.CaseDetails[i].CaseNumber" class="text-danger"></span>
                                         </div>
                                         <div class="col-md-6">
-                                            <input asp-for="@Model.CaseDetails[i].CourtDetails" name="CaseDetails[@i].CourtDetails" class="form-control" placeholder="Court details @(i + 1)" required />
+                                            <input asp-for="@Model.CaseDetails[i].CourtDetails" name="CaseDetails[@i].CourtDetails" class="form-control" placeholder="Trademark/Patent Filling No. OR Case No. @(i + 1)" required />
                                             <span asp-validation-for="@Model.CaseDetails[i].CourtDetails" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -304,99 +304,120 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const billingCycleRadios = document.querySelectorAll('input[name="BillingCycle"]');
-        const pricingTiers = document.getElementById('pricingTiers');
-        const totalPrice = document.getElementById('totalPrice');
-        const termsAndConditions = document.getElementById('termsAndConditions');
-        const caseFields = document.getElementById('caseFields');
-        const addFieldButton = document.getElementById('addFieldButton');
-        const addCaseFieldButton = document.getElementById('addCaseField');
+   document.addEventListener('DOMContentLoaded', function () {
+    const billingCycleRadios = document.querySelectorAll('input[name="BillingCycle"]');
+    const pricingTiers = document.getElementById('pricingTiers');
+    const totalPrice = document.getElementById('totalPrice');
+    const termsAndConditions = document.getElementById('termsAndConditions');
+    const caseFields = document.getElementById('caseFields');
+    const addFieldButton = document.getElementById('addFieldButton');
+    const addCaseFieldButton = document.getElementById('addCaseField');
 
-        let caseIndex = 0;
+    let caseIndex = 0;
 
-        // Prices for both monthly and annual plans
-        const prices = {
-            monthly: { Upto2: 9.99, Upto4: 19.98, Upto6: 29.97, Unlimited: 49.99 },
-            annual: { Upto2: 99.99, Upto4: 199.98, Upto6: 299.97, Unlimited: 499.99 }
-        };
+    // Navbar functionality
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
 
-        // Updates the displayed prices based on the selected billing cycle and plan
-        function updatePrices() {
+    function closeNavbar() {
+        if (navbarCollapse.classList.contains('show')) {
+            navbarCollapse.classList.remove('show');
+        }
+    }
 
-            const cycle = document.querySelector('input[name="BillingCycle"]:checked').id;
-            pricingTiers.querySelectorAll('button').forEach(button => {
-                const tier = button.dataset.tier;
-                const docketText = tier === 'Unlimited' ? 'Unlimited dockets*' : `Up to ${tier.replace('Upto', '')} dockets`;
-                const priceText = `$${prices[cycle][tier].toFixed(2)}`;
+    document.addEventListener('click', function (event) {
+        const isClickInside = navbarCollapse.contains(event.target) || navbarToggler.contains(event.target);
+        if (!isClickInside && navbarCollapse.classList.contains('show')) {
+            closeNavbar();
+        }
+    });
 
-                button.querySelector('.dockets').textContent = docketText;
-                button.querySelector('.price').textContent = priceText;
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', closeNavbar);
+    });
 
-                const annualPriceElement = button.querySelector('.annual-price');
-                if (cycle === 'annual') {
-                    annualPriceElement.style.display = 'block';
-                } else {
-                    annualPriceElement.style.display = 'none';
-                }
-            });
+    // Prices for both monthly and annual plans
+    const prices = {
+        monthly: { Upto2: 9.99, Upto4: 19.98, Upto6: 29.97, Unlimited: 49.99 },
+        annual: { Upto2: 99.99, Upto4: 199.98, Upto6: 299.97, Unlimited: 499.99 }
+    };
+
+    // Updates the displayed prices based on the selected billing cycle and plan
+    function updatePrices() {
+        const cycle = document.querySelector('input[name="BillingCycle"]:checked').id;
+        pricingTiers.querySelectorAll('button').forEach(button => {
+            const tier = button.dataset.tier;
+            const docketText = tier === 'Unlimited' ? 'Unlimited dockets*' : `Up to ${tier.replace('Upto', '')} dockets`;
+            const priceText = `$${prices[cycle][tier].toFixed(2)}`;
+
+            button.querySelector('.dockets').textContent = docketText;
+            button.querySelector('.price').textContent = priceText;
+
+            const annualPriceElement = button.querySelector('.annual-price');
+            if (cycle === 'annual') {
+                annualPriceElement.style.display = 'block';
+            } else {
+                annualPriceElement.style.display = 'none';
+            }
+        });
+        updateTotal();
+    }
+
+    // Calculate and display the total price based on the selected plan and billing cycle
+    function updateTotal() {
+        const cycle = document.querySelector('input[name="BillingCycle"]:checked').id;
+        const selectedTier = pricingTiers.querySelector('button.active');
+        if (selectedTier) {
+            const tier = selectedTier.dataset.tier;
+            totalPrice.textContent = prices[cycle][tier].toFixed(2);
+        }
+    }
+
+    // Handle billing cycle changes (monthly or annual)
+    billingCycleRadios.forEach(radio => {
+        radio.addEventListener('change', updatePrices);
+    });
+
+    // Handle plan selection and update price accordingly
+    pricingTiers.addEventListener('click', function (e) {
+        const targetButton = e.target.closest('button');
+        const planField = document.querySelector('input[name="Plan"]');
+        if (targetButton) {
+            pricingTiers.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            targetButton.classList.add('active');
+            const selectedTier = targetButton.dataset.tier;
+            planField.value = selectedTier;
+            // Show terms only for the "unlimited" plan
+            if (selectedTier === 'Unlimited') {
+                termsAndConditions.style.display = 'block';
+            } else {
+                termsAndConditions.style.display = 'none';
+            }
+
+            updateCaseFields(selectedTier);
             updateTotal();
         }
+    });
 
-        // Calculate and display the total price based on the selected plan and billing cycle
-        function updateTotal() {
-            const cycle = document.querySelector('input[name="BillingCycle"]:checked').id;
-            const selectedTier = pricingTiers.querySelector('button.active');
-            if (selectedTier) {
-                const tier = selectedTier.dataset.tier;
-                totalPrice.textContent = prices[cycle][tier].toFixed(2);
-            }
+    // Dynamically update the number of case fields based on the selected plan
+    function updateCaseFields(tier) {
+        caseFields.innerHTML = ''; // Clear existing case fields
+        caseIndex = 0; // Reset index
+        const fieldCount = tier === 'Unlimited' ? 2 : parseInt(tier.replace('Upto', ''));
+        for (let i = 1; i <= fieldCount; i++) {
+            addCaseField();
         }
 
-        // Handle billing cycle changes (monthly or annual)
-        billingCycleRadios.forEach(radio => {
-            radio.addEventListener('change', updatePrices);
-        });
-
-        // Handle plan selection and update price accordingly
-        pricingTiers.addEventListener('click', function (e) {
-            const targetButton = e.target.closest('button');
-            const planField = document.querySelector('input[name="Plan"]');
-            if (targetButton) {
-                pricingTiers.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                targetButton.classList.add('active');
-                const selectedTier = targetButton.dataset.tier;
-                planField.value = selectedTier;
-                // Show terms only for the "unlimited" plan
-                if (selectedTier === 'Unlimited') {
-                    termsAndConditions.style.display = 'block';
-                } else {
-                    termsAndConditions.style.display = 'none';
-                }
-
-                updateCaseFields(selectedTier);
-                updateTotal();
-            }
-        });
-
-        // Dynamically update the number of case fields based on the selected plan
-        function updateCaseFields(tier) {
-            caseFields.innerHTML = ''; // Clear existing case fields
-            caseIndex = 0; // Reset index
-            const fieldCount = tier === 'Unlimited' ? 2 : parseInt(tier.replace('Upto', ''));
-            for (let i = 1; i <= fieldCount; i++) {
-                addCaseField();
-            }
-
-            // Show the "Add Case" button only for the unlimited plan
-            if (tier === 'Unlimited') {
-                addFieldButton.style.display = 'block';
-            } else {
-                addFieldButton.style.display = 'none';
-            }
+        // Show the "Add Case" button only for the unlimited plan
+        if (tier === 'Unlimited') {
+            addFieldButton.style.display = 'block';
+        } else {
+            addFieldButton.style.display = 'none';
         }
+    }
 
-        // Function to dynamically add a case field to the form
+    // Function to dynamically add a case field to the form
         function addCaseField() {
             const row = document.createElement('div');
             row.className = 'row mb-2';
@@ -407,7 +428,7 @@
             caseNumberInput.type = 'text';
             caseNumberInput.className = 'form-control';
             caseNumberInput.name = `CaseDetails[${caseIndex}].CaseNumber`;
-            caseNumberInput.placeholder = `Case number ${caseIndex + 1}`;
+            caseNumberInput.placeholder = `Trademark/Patent Filling No. OR Case No. ${caseIndex + 1}`;
             caseNumberInput.required = true;
             caseNumberCol.appendChild(caseNumberInput);
 
@@ -417,7 +438,7 @@
             courtDetailsInput.type = 'text';
             courtDetailsInput.className = 'form-control';
             courtDetailsInput.name = `CaseDetails[${caseIndex}].CourtDetails`;
-            courtDetailsInput.placeholder = `Court details ${caseIndex + 1}`;
+            courtDetailsInput.placeholder = `Trademark/Patent Filling No. OR Case No. ${caseIndex + 1}`;
             courtDetailsInput.required = true;
             courtDetailsCol.appendChild(courtDetailsInput);
 
@@ -428,18 +449,13 @@
             caseIndex++; // Increment the case index for the next field
         }
 
-        // Add more case fields when the "Add Case" button is clicked (for unlimited plan)
-        addCaseFieldButton.addEventListener('click', () => addCaseField());
 
-        // Initialize with 2 case fields for the default "Up to 2" plan
-        pricingTiers.querySelector('button[data-tier="Upto2"]').classList.add('active');
-        updateCaseFields('Upto2'); // Set 2 fields initially
-        updatePrices(); // Initialize prices
+    // Add more case fields when the "Add Case" button is clicked (for unlimited plan)
+    addCaseFieldButton.addEventListener('click', () => addCaseField());
 
-        // Form submission handler (for demo purposes)
-        // document.getElementById('registrationForm').addEventListener('submit', function (e) {
-        //     e.preventDefault(); // Prevent actual form submission (demo)
-        //     alert('Form submitted successfully!');
-        // });
-    });
+    // Initialize with 2 case fields for the default "Up to 2" plan
+    pricingTiers.querySelector('button[data-tier="Upto2"]').classList.add('active');
+    updateCaseFields('Upto2'); // Set 2 fields initially
+    updatePrices(); // Initialize prices
+});
 </script>
