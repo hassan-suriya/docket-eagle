@@ -19,7 +19,7 @@
                     <a class="nav-link active" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white ms-2" asp-controller="Auth" asp-action="Signin">LogIn</a>
+                    <a class="nav-link btn btn-primary text-white ms-2" asp-controller="Auth" asp-action="Signin">Sign In</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link btn btn-primary text-white ms-2" asp-controller="Auth" asp-action="Register">Register</a>
@@ -112,7 +112,7 @@
                 <ul class="list-unstyled">
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-controller="Auth" asp-action="Register">Register</a></li>
-                    <li><a asp-controller="Auth" asp-action="Signin">LogIn</a></li>
+                    <li><a asp-controller="Auth" asp-action="Signin">Sign In</a></li>
                 </ul>
             </div>
             <div class="col-md-2 mb-4">
@@ -398,6 +398,7 @@
             return (
                 rect.top >= 0 &&
                 rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
                 rect.right <= (window.innerWidth || document.documentElement.clientWidth)
             );
         };
