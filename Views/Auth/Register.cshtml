@@ -20,7 +20,7 @@
                     <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white" asp-controller="Auth" asp-action="Signin">Sign In</a>
+                    <a class="nav-link btn btn-primary text-white" asp-controller="Auth" asp-action="Signin">Log In</a>
                 </li>
             </ul>
         </div>
@@ -164,7 +164,7 @@
                                             <span asp-validation-for="@Model.CaseDetails[i].CaseNumber" class="text-danger"></span>
                                         </div>
                                         <div class="col-md-6">
-                                            <input asp-for="@Model.CaseDetails[i].CourtDetails" name="CaseDetails[@i].CourtDetails" class="form-control" placeholder="Trademark/Patent Filling No. OR Case No. @(i + 1)" required />
+                                            <input asp-for="@Model.CaseDetails[i].CourtDetails" name="CaseDetails[@i].CourtDetails" class="form-control" placeholder="Trademark/Patent Filling No. OR Court No. @(i + 1)" required />
                                             <span asp-validation-for="@Model.CaseDetails[i].CourtDetails" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -191,7 +191,7 @@
                         <button type="submit" class="btn btn-primary w-100">Register/Checkout</button>
                     </form>
                     <div class="text-center mt-3">
-                        <p>Already have an account? <a asp-controller="Auth" asp-action="Signin" class="text-primary">Sign In</a></p>
+                        <p>Already have an account? <a asp-controller="Auth" asp-action="Signin" class="text-primary">Log In</a></p>
                     </div>
                 </div>
             </div>
@@ -438,7 +438,7 @@
             courtDetailsInput.type = 'text';
             courtDetailsInput.className = 'form-control';
             courtDetailsInput.name = `CaseDetails[${caseIndex}].CourtDetails`;
-            courtDetailsInput.placeholder = `Trademark/Patent Filling No. OR Case No. ${caseIndex + 1}`;
+            courtDetailsInput.placeholder = `Trademark/Patent Filling No. OR Court No. ${caseIndex + 1}`;
             courtDetailsInput.required = true;
             courtDetailsCol.appendChild(courtDetailsInput);
 
