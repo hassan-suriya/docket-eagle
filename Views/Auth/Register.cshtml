@@ -160,11 +160,11 @@
                                 {
                                     <div class="row mb-2">
                                         <div class="col-md-6 mb-2 mb-md-0">
-                                            <input asp-for="@Model.CaseDetails[i].CaseNumber" name="CaseDetails[@i].CaseNumber" class="form-control" placeholder="Trademark/Patent Filling No. OR Case No. @(i + 1)" required />
+                                            <input asp-for="@Model.CaseDetails[i].CaseNumber" name="CaseDetails[@i].CaseNumber" class="form-control small-placeholder" placeholder="Trademark/Patent Filling No. OR Case No. @(i + 1)" required />
                                             <span asp-validation-for="@Model.CaseDetails[i].CaseNumber" class="text-danger"></span>
                                         </div>
                                         <div class="col-md-6">
-                                            <input asp-for="@Model.CaseDetails[i].CourtDetails" name="CaseDetails[@i].CourtDetails" class="form-control" placeholder="Trademark/Patent Filling No. OR Court No. @(i + 1)" required />
+                                            <input asp-for="@Model.CaseDetails[i].CourtDetails" name="CaseDetails[@i].CourtDetails" class="form-control small-placeholder" placeholder="Trademark/Patent Filling No. OR Court No. @(i + 1)" required />
                                             <span asp-validation-for="@Model.CaseDetails[i].CourtDetails" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -174,6 +174,33 @@
                                 <button type="button" class="btn btn-outline-primary btn-sm" id="addCaseField">+ Add Case</button>
                             </div>
                         </div>
+
+                        <style>
+                            .small-placeholder::placeholder {
+                                font-size: 0.8em !important;
+                            }
+                        </style>
+                        <style>
+                            .small-placeholder::placeholder {
+                                font-size: 0.8em !important;
+                            }
+
+                            .small-placeholder::-webkit-input-placeholder {
+                                font-size: 0.8em !important;
+                            }
+
+                            .small-placeholder::-moz-placeholder {
+                                font-size: 0.8em !important;
+                            }
+
+                            .small-placeholder:-ms-input-placeholder {
+                                font-size: 0.8em !important;
+                            }
+
+                            .small-placeholder:-moz-placeholder {
+                                font-size: 0.8em !important;
+                            }
+                        </style>
 
 
                         <div class="mb-3 text-center">
@@ -426,7 +453,7 @@
             caseNumberCol.className = 'col-md-6 mb-2 mb-md-0';
             const caseNumberInput = document.createElement('input');
             caseNumberInput.type = 'text';
-            caseNumberInput.className = 'form-control';
+            caseNumberInput.className = 'form-control small-placeholder';
             caseNumberInput.name = `CaseDetails[${caseIndex}].CaseNumber`;
             caseNumberInput.placeholder = `Trademark/Patent Filling No. OR Case No. ${caseIndex + 1}`;
             caseNumberInput.required = true;
@@ -436,7 +463,7 @@
             courtDetailsCol.className = 'col-md-6';
             const courtDetailsInput = document.createElement('input');
             courtDetailsInput.type = 'text';
-            courtDetailsInput.className = 'form-control';
+            courtDetailsInput.className = 'form-control small-placeholder';
             courtDetailsInput.name = `CaseDetails[${caseIndex}].CourtDetails`;
             courtDetailsInput.placeholder = `Trademark/Patent Filling No. OR Court No. ${caseIndex + 1}`;
             courtDetailsInput.required = true;
@@ -446,7 +473,7 @@
             row.appendChild(courtDetailsCol);
             caseFields.appendChild(row);
 
-            caseIndex++; // Increment the case index for the next field
+            caseIndex++;
         }
 
 
