@@ -60,7 +60,7 @@
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
-                                <input asp-for="Number" class="form-control" placeholder="Phone/Mobile No" required />
+                                <input asp-for="Number" class="form-control" placeholder="Phone/Mobile No" required />
                                 <span asp-validation-for="Number" class="text-danger"></span>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                     <option value="instagram">Instagram</option>
                                     <option value="linkedin">LinkedIn</option>
                                     <option value="Email">Email</option>
-                                    <option value="Phone/Mobile (Direct Call)">Phone/Mobile (Direct Call)</option>
+                                    <option value="Phone/Mobile (Direct Call)">Phone/Mobile (Direct Call)</option>
                                     <option value="SMS">SMS</option>
                                     <option value="Messenger">Messenger</option>
                                     <option value="Telegram">Telegram</option>
@@ -97,11 +97,13 @@
                                 <label class="btn btn-outline-primary flex-grow-1" for="monthly">Monthly</label>
                                 <input asp-for="BillingCycle" type="radio" class="btn-check" id="annual" value="Annually" autocomplete="off" />
                                 <label class="btn btn-outline-primary flex-grow-1" for="annual">Annual</label>
+                                <input asp-for="BillingCycle" type="radio" class="btn-check" id="onetime" value="OneTime" autocomplete="off" />
+                                <label class="btn btn-outline-primary flex-grow-1" for="onetime">One Time</label>
                             </div>
                             <span asp-validation-for="BillingCycle" class="text-danger"></span>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" id="planSelection">
                             <h3 class="section-heading text-center">Select Your Plan</h3>
                             <p class="mt-2 mb-3 text-center">Introductory offer for first 100 (Pioneer) Subscribers</p>
                             <div class="row" id="pricingTiers">
@@ -120,7 +122,6 @@
                                         <span class="price">$19.98</span>
                                         <span class="annual-price" style="display: none;">
                                             <span class="original-price"><s>$239.98</s></span>
-
                                         </span>
                                     </button>
                                 </div>
@@ -130,7 +131,6 @@
                                         <span class="price">$29.97</span>
                                         <span class="annual-price" style="display: none;">
                                             <span class="original-price"><s>$359.97</s></span>
-
                                         </span>
                                     </button>
                                 </div>
@@ -140,11 +140,10 @@
                                         <span class="price">$49.99</span>
                                         <span class="annual-price" style="display: none;">
                                             <span class="original-price"><s>$599.99</s></span>
-
                                         </span>
                                     </button>
                                 </div>
-                                <input asp-for="Plan" name="Plan" style="display:none;"/>
+                                <input asp-for="Plan" name="Plan" style="display:none;" />
                             </div>
                             <span asp-validation-for="Plan" class="text-danger"></span>
                         </div>
@@ -174,34 +173,6 @@
                                 <button type="button" class="btn btn-outline-primary btn-sm" id="addCaseField">+ Add Case</button>
                             </div>
                         </div>
-
-                        <style>
-                            .small-placeholder::placeholder {
-                                font-size: 0.8em !important;
-                            }
-                        </style>
-                        <style>
-                            .small-placeholder::placeholder {
-                                font-size: 0.8em !important;
-                            }
-
-                            .small-placeholder::-webkit-input-placeholder {
-                                font-size: 0.8em !important;
-                            }
-
-                            .small-placeholder::-moz-placeholder {
-                                font-size: 0.8em !important;
-                            }
-
-                            .small-placeholder:-ms-input-placeholder {
-                                font-size: 0.8em !important;
-                            }
-
-                            .small-placeholder:-moz-placeholder {
-                                font-size: 0.8em !important;
-                            }
-                        </style>
-
 
                         <div class="mb-3 text-center">
                             <h4>Total: $<span id="totalPrice">9.99</span></h4>
@@ -327,124 +298,130 @@
         </div>
     </div>
 </div>
-
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-   document.addEventListener('DOMContentLoaded', function () {
-    const billingCycleRadios = document.querySelectorAll('input[name="BillingCycle"]');
-    const pricingTiers = document.getElementById('pricingTiers');
-    const totalPrice = document.getElementById('totalPrice');
-    const termsAndConditions = document.getElementById('termsAndConditions');
-    const caseFields = document.getElementById('caseFields');
-    const addFieldButton = document.getElementById('addFieldButton');
-    const addCaseFieldButton = document.getElementById('addCaseField');
+    document.addEventListener('DOMContentLoaded', function () {
+        const billingCycleRadios = document.querySelectorAll('input[name="BillingCycle"]');
+        const pricingTiers = document.getElementById('pricingTiers');
+        const totalPrice = document.getElementById('totalPrice');
+        const termsAndConditions = document.getElementById('termsAndConditions');
+        const caseFields = document.getElementById('caseFields');
+        const addFieldButton = document.getElementById('addFieldButton');
+        const addCaseFieldButton = document.getElementById('addCaseField');
+        const planSelection = document.getElementById('planSelection');
 
-    let caseIndex = 0;
+        let caseIndex = 0;
 
-    // Navbar functionality
-    const navbarToggler = document.querySelector('.navbar-toggler');
-    const navbarCollapse = document.querySelector('.navbar-collapse');
+        // Navbar functionality (unchanged)
+        // ...
 
-    function closeNavbar() {
-        if (navbarCollapse.classList.contains('show')) {
-            navbarCollapse.classList.remove('show');
-        }
-    }
+        // Prices for both monthly and annual plans, and one-time fee
+        const prices = {
+            Monthly: { Upto2: 9.99, Upto4: 19.98, Upto6: 29.97, Unlimited: 49.99 },
+            Annually: { Upto2: 99.99, Upto4: 199.98, Upto6: 299.97, Unlimited: 499.99 },
+            OneTime: 4.99
+        };
 
-    document.addEventListener('click', function (event) {
-        const isClickInside = navbarCollapse.contains(event.target) || navbarToggler.contains(event.target);
-        if (!isClickInside && navbarCollapse.classList.contains('show')) {
-            closeNavbar();
-        }
-    });
-
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', closeNavbar);
-    });
-
-    // Prices for both monthly and annual plans
-    const prices = {
-        monthly: { Upto2: 9.99, Upto4: 19.98, Upto6: 29.97, Unlimited: 49.99 },
-        annual: { Upto2: 99.99, Upto4: 199.98, Upto6: 299.97, Unlimited: 499.99 }
-    };
-
-    // Updates the displayed prices based on the selected billing cycle and plan
-    function updatePrices() {
-        const cycle = document.querySelector('input[name="BillingCycle"]:checked').id;
-        pricingTiers.querySelectorAll('button').forEach(button => {
-            const tier = button.dataset.tier;
-            const docketText = tier === 'Unlimited' ? 'Unlimited dockets*' : `Up to ${tier.replace('Upto', '')} dockets`;
-            const priceText = `$${prices[cycle][tier].toFixed(2)}`;
-
-            button.querySelector('.dockets').textContent = docketText;
-            button.querySelector('.price').textContent = priceText;
-
-            const annualPriceElement = button.querySelector('.annual-price');
-            if (cycle === 'annual') {
-                annualPriceElement.style.display = 'block';
+        // Updates the displayed prices based on the selected billing cycle and plan
+        function updatePrices() {
+            const cycle = document.querySelector('input[name="BillingCycle"]:checked').value;
+            if (cycle === 'OneTime') {
+                planSelection.style.display = 'none';
+                termsAndConditions.style.display = 'none';
+                const planField = document.querySelector('input[name="Plan"]');
+                planField.value='Upto2'
+                totalPrice.textContent = prices.OneTime.toFixed(2);
+                updateCaseFields('OneTime');
             } else {
-                annualPriceElement.style.display = 'none';
+                planSelection.style.display = 'block';
+                pricingTiers.querySelectorAll('button').forEach(button => {
+                    const tier = button.dataset.tier;
+                    const docketText = tier === 'Unlimited' ? 'Unlimited dockets*' : `Up to ${tier.replace('Upto', '')} dockets`;
+                    const priceText = `$${prices[cycle][tier].toFixed(2)}`;
+
+                    button.querySelector('.dockets').textContent = docketText;
+                    button.querySelector('.price').textContent = priceText;
+
+                    const annualPriceElement = button.querySelector('.annual-price');
+                    if (cycle === 'Annually') {
+                        annualPriceElement.style.display = 'block';
+                    } else {
+                        annualPriceElement.style.display = 'none';
+                    }
+                });
+                updateTotal();
+            }
+        }
+
+        // Calculate and display the total price based on the selected plan and billing cycle
+        function updateTotal() {
+            const cycle = document.querySelector('input[name="BillingCycle"]:checked').value;
+            if (cycle === 'OneTime') {
+                totalPrice.textContent = prices.OneTime.toFixed(2);
+            } else {
+                const selectedTier = pricingTiers.querySelector('button.active');
+                if (selectedTier) {
+                    const tier = selectedTier.dataset.tier;
+                    totalPrice.textContent = prices[cycle][tier].toFixed(2);
+                }
+            }
+        }
+
+        // Handle billing cycle changes (monthly, annual, or one-time)
+        billingCycleRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                updatePrices();
+                if (this.value === 'OneTime') {
+                    updateCaseFields('OneTime');
+                } else {
+                    const activeTier = pricingTiers.querySelector('button.active');
+                    if (activeTier) {
+                        updateCaseFields(activeTier.dataset.tier);
+                    } else {
+                        updateCaseFields('Upto2');
+                    }
+                }
+            });
+        });
+
+        // Handle plan selection and update price accordingly
+        pricingTiers.addEventListener('click', function (e) {
+            const targetButton = e.target.closest('button');
+            const planField = document.querySelector('input[name="Plan"]');
+            if (targetButton) {
+                pricingTiers.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                targetButton.classList.add('active');
+                const selectedTier = targetButton.dataset.tier;
+                planField.value = selectedTier;
+                if (selectedTier === 'Unlimited') {
+                    termsAndConditions.style.display = 'block';
+                } else {
+                    termsAndConditions.style.display = 'none';
+                }
+
+                updateCaseFields(selectedTier);
+                updateTotal();
             }
         });
-        updateTotal();
-    }
 
-    // Calculate and display the total price based on the selected plan and billing cycle
-    function updateTotal() {
-        const cycle = document.querySelector('input[name="BillingCycle"]:checked').id;
-        const selectedTier = pricingTiers.querySelector('button.active');
-        if (selectedTier) {
-            const tier = selectedTier.dataset.tier;
-            totalPrice.textContent = prices[cycle][tier].toFixed(2);
-        }
-    }
-
-    // Handle billing cycle changes (monthly or annual)
-    billingCycleRadios.forEach(radio => {
-        radio.addEventListener('change', updatePrices);
-    });
-
-    // Handle plan selection and update price accordingly
-    pricingTiers.addEventListener('click', function (e) {
-        const targetButton = e.target.closest('button');
-        const planField = document.querySelector('input[name="Plan"]');
-        if (targetButton) {
-            pricingTiers.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            targetButton.classList.add('active');
-            const selectedTier = targetButton.dataset.tier;
-            planField.value = selectedTier;
-            // Show terms only for the "unlimited" plan
-            if (selectedTier === 'Unlimited') {
-                termsAndConditions.style.display = 'block';
-            } else {
-                termsAndConditions.style.display = 'none';
+        // Dynamically update the number of case fields based on the selected plan
+        function updateCaseFields(tier) {
+            caseFields.innerHTML = ''; // Clear existing case fields
+            caseIndex = 0; // Reset index
+            const fieldCount = tier === 'OneTime' ? 2 : (tier === 'Unlimited' ? 2 : parseInt(tier.replace('Upto', '')));
+            for (let i = 1; i <= fieldCount; i++) {
+                addCaseField();
             }
 
-            updateCaseFields(selectedTier);
-            updateTotal();
-        }
-    });
-
-    // Dynamically update the number of case fields based on the selected plan
-    function updateCaseFields(tier) {
-        caseFields.innerHTML = ''; // Clear existing case fields
-        caseIndex = 0; // Reset index
-        const fieldCount = tier === 'Unlimited' ? 2 : parseInt(tier.replace('Upto', ''));
-        for (let i = 1; i <= fieldCount; i++) {
-            addCaseField();
+            // Show the "Add Case" button only for the unlimited plan and not for one-time
+            if (tier === 'Unlimited' && document.querySelector('input[name="BillingCycle"]:checked').value !== 'OneTime') {
+                addFieldButton.style.display = 'block';
+            } else {
+                addFieldButton.style.display = 'none';
+            }
         }
 
-        // Show the "Add Case" button only for the unlimited plan
-        if (tier === 'Unlimited') {
-            addFieldButton.style.display = 'block';
-        } else {
-            addFieldButton.style.display = 'none';
-        }
-    }
-
-    // Function to dynamically add a case field to the form
+        // Function to dynamically add a case field to the form
         function addCaseField() {
             const row = document.createElement('div');
             row.className = 'row mb-2';
@@ -476,13 +453,12 @@
             caseIndex++;
         }
 
+        // Add more case fields when the "Add Case" button is clicked (for unlimited plan)
+        addCaseFieldButton.addEventListener('click', () => addCaseField());
 
-    // Add more case fields when the "Add Case" button is clicked (for unlimited plan)
-    addCaseFieldButton.addEventListener('click', () => addCaseField());
-
-    // Initialize with 2 case fields for the default "Up to 2" plan
-    pricingTiers.querySelector('button[data-tier="Upto2"]').classList.add('active');
-    updateCaseFields('Upto2'); // Set 2 fields initially
-    updatePrices(); // Initialize prices
-});
+        // Initialize with 2 case fields for the default "Up to 2" plan
+        pricingTiers.querySelector('button[data-tier="Upto2"]').classList.add('active');
+        updateCaseFields('Upto2'); // Set 2 fields initially
+        updatePrices(); // Initialize prices
+    });
 </script>

@@ -42,16 +42,17 @@ namespace Docket_Eagle.Controllers
                 var user=await _userRepository.GetByEmail(model.Email);
                 if(user!=null && HashPassword.GetHashPassword(model.Password) == user.Password)
                 {
-                    await HttpContext.SignInAsync("authCookie", new ClaimsPrincipal(
-                       new ClaimsIdentity(new List<Claim>
-                       {
-                             
-                             new Claim(ClaimTypes.Role, user.Role),
-                             new Claim(user.Id, user.Id),
-                       },
-                       "authCookie")));
+                   
                     if (user.Role == "Admin")
                     {
+                        await HttpContext.SignInAsync("authCookie", new ClaimsPrincipal(
+                          new ClaimsIdentity(new List<Claim>
+                          {
+
+                                 new Claim(ClaimTypes.Role, user.Role),
+                                 new Claim(user.Id, user.Id),
+                          },
+                      "authCookie")));
                         return RedirectToAction("Admin", "Dashboard");
                     }
                     if (user.PaymentStatus == false)
@@ -64,6 +65,14 @@ namespace Docket_Eagle.Controllers
                     }
                     else
                     {
+                        await HttpContext.SignInAsync("authCookie", new ClaimsPrincipal(
+                          new ClaimsIdentity(new List<Claim>
+                          {
+
+                                 new Claim(ClaimTypes.Role, user.Role),
+                                 new Claim(user.Id, user.Id),
+                          },
+                      "authCookie")));
                         return RedirectToAction("Client", "Dashboard");
                     }
                    
