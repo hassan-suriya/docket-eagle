@@ -108,5 +108,11 @@ namespace Docket_Eagle.Controllers
             return RedirectToAction("Signin", "Auth");
 
         }
+
+        [HttpPost("/Auth/ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            return Json(new { success = true });
+        }
     }
 }
